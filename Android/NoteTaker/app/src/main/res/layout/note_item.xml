@@ -1,7 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:id="@+id/note_item">
 
-</LinearLayout>
+
+	<ImageView
+		android:layout_width="80dp"
+		android:layout_height="80dp"
+		android:src="@drawable/f"
+		android:id="@+id/note_image"/>
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_marginStart="15dp"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/note_image"
+		android:text="TITLE"
+		android:id="@+id/note_title"
+		android:maxLines="1"
+		android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_marginStart="15dp"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/note_image"
+		android:layout_below="@id/note_title"
+		android:text="BODY"
+		android:maxLines="3"
+		android:id="@+id/note_body"
+		android:textAppearance="@style/TextAppearance.AppCompat.Small"
+		android:layout_alignBottom="@id/note_image"/>
+
+
+</RelativeLayout>
