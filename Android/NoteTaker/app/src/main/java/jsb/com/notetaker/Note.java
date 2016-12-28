@@ -1,12 +1,12 @@
 package jsb.com.notetaker;
 
-import java.util.Date;
+import java.io.Serializable;
 
 /**
  * Created by Jagjit Singh on 12/21/2016.
  */
 
-public class Note {
+public class Note implements Serializable{
 
 	public enum Category{PRIVATE,WORK,FINANCIAL,STUDIES,MEALS}
 	private String title;
@@ -62,7 +62,41 @@ public class Note {
 
 	}
 
+	public static int getCategoryImageFromCategory(Category category){
 
+		switch (category){
+			case PRIVATE:
+				return R.drawable.p;
+			case FINANCIAL:
+				return R.drawable.f;
+			case STUDIES:
+				return R.drawable.s;
+			case MEALS:
+				return R.drawable.m;
+			case WORK:
+				return R.drawable.w;
+			default:
+				return R.drawable.p;
+		}
+
+	}
+	public static Category getCategoryFromString(String s){
+		switch (s){
+
+			case "PRIVATE":
+				return Category.PRIVATE;
+			case "FINANCIAL":
+				return Category.FINANCIAL;
+			case "STUDIES":
+				return Category.STUDIES;
+			case "MEALS":
+				return Category.MEALS;
+			case "WORK":
+				return Category.WORK;
+			default:
+				return Category.PRIVATE;
+		}
+	}
 	public String toString(){
 		return "Title: "+ title+" Body: "+body+" Date: "+date+" Category: "+category;
 	}
