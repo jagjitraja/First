@@ -15,7 +15,7 @@
 
 	<TextView
 		android:layout_width="wrap_content"
-		android:layout_marginStart="15dp"
+		android:layout_marginStart="@dimen/margin"
 		android:layout_height="wrap_content"
 		android:layout_toRightOf="@id/note_image"
 		android:text="TITLE"
@@ -26,7 +26,7 @@
 
 	<TextView
 		android:layout_width="wrap_content"
-		android:layout_marginStart="15dp"
+		android:layout_marginStart="@dimen/margin"
 		android:layout_height="wrap_content"
 		android:layout_toRightOf="@id/note_image"
 		android:layout_below="@id/note_title"
