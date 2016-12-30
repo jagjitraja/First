@@ -2,15 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="@dimen/note_item_height"
                 android:id="@+id/note_item"
                 android:padding="10dp">
-
 
 	<ImageView
 		android:layout_width="70dp"
 		android:layout_height="70dp"
-		android:src="@drawable/f"
+		android:background="@drawable/f"
 		android:id="@+id/note_image"/>
 
 	<TextView

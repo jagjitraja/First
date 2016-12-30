@@ -1,4 +1,4 @@
-package jsb.com.notetaker;
+package jsb.com.notetaker.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import jsb.com.notetaker.R;
+
 public class MainActivity extends AppCompatActivity {
+
+	public final static String APP_ID_KEY ="Note-Taker-ID";
 
 	public final static String LAUNCH_NOTE_DETAIL = "LAUNCH_NOTE_DETAIL_ACTIVITY";
 	public final static String NOTE_TITLE_KEY ="NOTE TITLE";
@@ -16,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
 	public final static String VIEW_NOTE_MOTIVE = "1";;
 	public final static String EDIT_NOTE_MOTIVE = "2";;
 	public final static String ADD_NOTE_MOTIVE = "3";
+	public final static String SAVE_DIALOGUE_IS_SHOWING = "SAVE_DIALOGUE IS DISPLAYED ON SCREEN";
+	public final static String CHOICE_DIALOGUE_IS_SHOWING = "CHOICE DIALOGUE IS DISPLAYED ON SCREEN";
 
 
 	@Override

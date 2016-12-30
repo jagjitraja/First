@@ -1,4 +1,4 @@
-package jsb.com.notetaker;
+package jsb.com.notetaker.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import jsb.com.notetaker.Activities.MainActivity;
+import jsb.com.notetaker.AdaptersAndDataFiles.Note;
+import jsb.com.notetaker.R;
 
 public class NoteViewFragment extends Fragment {
 

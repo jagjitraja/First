@@ -1,4 +1,4 @@
-package jsb.com.notetaker;
+package jsb.com.notetaker.Fragments;
 
 
 import android.content.Intent;
@@ -13,6 +13,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import jsb.com.notetaker.Activities.MainActivity;
+import jsb.com.notetaker.Activities.NoteDetailActivity;
+import jsb.com.notetaker.AdaptersAndDataFiles.DataFile;
+import jsb.com.notetaker.AdaptersAndDataFiles.NoteAdapter;
+import jsb.com.notetaker.AdaptersAndDataFiles.Note;
+import jsb.com.notetaker.AdaptersAndDataFiles.NoteDataController;
+import jsb.com.notetaker.R;
 
 
 /**
@@ -60,7 +68,7 @@ public class NoteListFragment extends ListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		launchNoteDetailActivity(position,MainActivity.VIEW_NOTE_MOTIVE);
+		launchNoteDetailActivity(position, MainActivity.VIEW_NOTE_MOTIVE);
 	}
 
 	@Override
@@ -93,10 +101,11 @@ public class NoteListFragment extends ListFragment {
 	public void launchNoteDetailActivity(int position, String noteDetailMotive){
 
 		Intent intent = new Intent(getActivity(),NoteDetailActivity.class);
-
 		Note note = (Note) getListAdapter().getItem(position);
 		String title = note.getTitle();
 		String body = note.getBody();
+
+
 		Note.Category category = note.getCategory();
 
 		intent.putExtra(MainActivity.NOTE_TITLE_KEY,title);
@@ -104,8 +113,11 @@ public class NoteListFragment extends ListFragment {
 		intent.putExtra(MainActivity.NOTE_CATEGORY_KEY,category);
 		intent.putExtra(MainActivity.INTENT_MOTIVE,noteDetailMotive);
 
-		startActivity(intent);
+		NoteDataController.initialCategory = category;
+		NoteDataController.initialNoteBody = body;
+		NoteDataController.initialNoteTitle = title;
 
+		startActivity(intent);
 	}
 
 }

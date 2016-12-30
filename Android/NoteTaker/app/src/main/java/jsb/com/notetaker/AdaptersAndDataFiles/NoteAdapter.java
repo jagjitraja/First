@@ -1,11 +1,12 @@
-package jsb.com.notetaker;
+package jsb.com.notetaker.AdaptersAndDataFiles;
+
+/**
+ * Created by Jagjit Singh on 12/29/2016.
+ */
+
 
 import android.content.Context;
-import android.media.Image;
 import android.support.annotation.NonNull;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import jsb.com.notetaker.R;
+
 /**
  * Created by Jagjit Singh on 12/22/2016.
  */
 
-public class NoteAdapter extends ArrayAdapter<Note>{
+public class NoteAdapter extends ArrayAdapter<Note> {
 
 	public static class ViewHolder{
 		ImageView noteImage;

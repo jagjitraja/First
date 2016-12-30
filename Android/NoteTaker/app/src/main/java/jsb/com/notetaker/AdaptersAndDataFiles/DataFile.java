@@ -1,4 +1,4 @@
-package jsb.com.notetaker;
+package jsb.com.notetaker.AdaptersAndDataFiles;
 
 import android.content.Context;
 
@@ -68,7 +68,6 @@ public class DataFile {
 		}
 	}
 
-
 	public ArrayList<Note> read_data(){
 		ArrayList notesRead = new ArrayList<Note>();
 		if(dataSource.exists()){
@@ -91,5 +90,4 @@ public class DataFile {
 		}
 		return notesRead;
 	}
-
 }

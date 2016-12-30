@@ -7,13 +7,13 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	app:layout_behavior="@string/appbar_scrolling_view_behavior"
-	tools:context="jsb.com.notetaker.MainActivity"
+	tools:context="jsb.com.notetaker.Activities.MainActivity"
 	tools:showIn="@layout/activity_main">
 
 	<fragment
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:name="jsb.com.notetaker.NoteListFragment"
+		android:name="jsb.com.notetaker.Fragments.NoteListFragment"
 		android:id="@+id/note_list_fragment"/>
 
 

@@ -1,4 +1,4 @@
-package jsb.com.notetaker;
+package jsb.com.notetaker.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,11 +6,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import jsb.com.notetaker.Fragments.NoteEditFragment;
+import jsb.com.notetaker.Fragments.NoteViewFragment;
+import jsb.com.notetaker.R;
+
 public class NoteDetailActivity extends AppCompatActivity {
 
 	private FragmentManager fragmentManager;
 	private FragmentTransaction fragmentTransaction;
-
+	public static boolean isSaveDialogueShowing;
+	public static boolean isChoiceDialogueShowing;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

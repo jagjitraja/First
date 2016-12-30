@@ -1,6 +1,8 @@
-package jsb.com.notetaker;
+package jsb.com.notetaker.AdaptersAndDataFiles;
 
 import java.io.Serializable;
+
+import jsb.com.notetaker.R;
 
 /**
  * Created by Jagjit Singh on 12/21/2016.
@@ -40,6 +42,22 @@ public class Note implements Serializable{
 
 	public String getTitle() {
 		return title;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public void setDate(long date) {
+		this.date = date;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public int getCategoryImage(){

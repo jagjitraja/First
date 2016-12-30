@@ -5,7 +5,8 @@
 	<string name="save_button">Save</string>
 	<string name="cancel_button">Cancel</string>
 	<string name="choose_category_dialogue_title">Choose a Category:</string>
-
+	<string name="save_confirm_dialogue_title">Save the changes made ?</string>
+	<string name="save_confirm_message">The changes made will be saved and cant be reverted.</string>
 
 	<string name="view_note">View Note</string>
 	<string name="edit_note">Edit Note</string>
