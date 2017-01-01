@@ -10,7 +10,7 @@ import jsb.com.notetaker.R;
 
 public class MainActivity extends AppCompatActivity {
 
-	public final static String APP_ID_KEY ="Note-Taker-ID";
+	public final static String APP_ID_KEY ="loggingID";
 
 	public final static String LAUNCH_NOTE_DETAIL = "LAUNCH_NOTE_DETAIL_ACTIVITY";
 	public final static String NOTE_TITLE_KEY ="NOTE TITLE";

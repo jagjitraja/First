@@ -1,6 +1,7 @@
 package jsb.com.notetaker.Fragments;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -17,6 +19,7 @@ import android.widget.ImageButton;
 import jsb.com.notetaker.Activities.MainActivity;
 import jsb.com.notetaker.Activities.NoteDetailActivity;
 import jsb.com.notetaker.AdaptersAndDataFiles.Note;
+import jsb.com.notetaker.AdaptersAndDataFiles.NoteDataController;
 import jsb.com.notetaker.R;
 
 
@@ -29,14 +32,23 @@ public class NoteEditFragment extends Fragment {
 	private EditText editTitle;
 	private EditText editBody;
 	private AlertDialog chooseCategoryDialogue;
-	private AlertDialog saveConfirmDialogue;
+	public AlertDialog saveConfirmDialogue;
 	private Note.Category chosenCategory;
-
 	private Button saveButton;
 
-	private boolean changesMade = false;
-	private static Note.Category initialCategory;
+	/*private UpdateNoteData updateNoteData;
 
+	//Interface used to transfer note data from fragment to notedetailactivity on destroy
+	//Interface used to transfer note data from fragment to notedetailactivity on destroy
+	public interface UpdateNoteData{
+		public void passNoteData(String newTitle, String newBody, Note.Category newCategory);
+	}
+
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		updateNoteData = (UpdateNoteData)context;
+	}*/
 
 	public NoteEditFragment() {
 		// Required empty public constructor
@@ -52,7 +64,6 @@ public class NoteEditFragment extends Fragment {
 
 
 	private void fillNoteData(Intent intent, Bundle savedInstanceState){
-
 		final String title = intent.getExtras().getString(MainActivity.NOTE_TITLE_KEY);
 		String body = intent.getExtras().getString(MainActivity.NOTE_BODY_KEY);
 		Note.Category category;
@@ -64,6 +75,7 @@ public class NoteEditFragment extends Fragment {
 		else{
 			category = (Note.Category) savedInstanceState.getSerializable(MainActivity.NOTE_CATEGORY_KEY);
 			chosenCategory = category;
+			//handle orientation change when dialogue is showing
 			if(savedInstanceState.getBoolean(MainActivity.SAVE_DIALOGUE_IS_SHOWING)){
 				launchSaveConfirmationDialogue();
 				saveConfirmDialogue.show();
@@ -79,6 +91,13 @@ public class NoteEditFragment extends Fragment {
 		imageButton.setImageResource(Note.getCategoryImageFromCategory(category));
 		editTitle.setText(title);
 		editBody.setText(body);
+		holdInitialNoteData(title,body,category);
+	}
+
+	private void holdInitialNoteData(String title, String body, Note.Category category){
+		NoteDataController.initialCategory = category;
+		NoteDataController.initialNoteBody = body;
+		NoteDataController.initialNoteTitle = title;
 	}
 
 
@@ -86,7 +105,7 @@ public class NoteEditFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 
-		View fragmentLayout = inflater.inflate(R.layout.fragment_note_edit,container,false);
+		final View fragmentLayout = inflater.inflate(R.layout.fragment_note_edit,container,false);
 		getUIElements(fragmentLayout);
 		Intent intent = getActivity().getIntent();
 		fillNoteData(intent,savedInstanceState);
@@ -94,6 +113,8 @@ public class NoteEditFragment extends Fragment {
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				//Hide keyboard when dialogue is launched
+				hideKeyboard(fragmentLayout);
 				launchSaveConfirmationDialogue();
 				saveConfirmDialogue.show();
 				NoteDetailActivity.isSaveDialogueShowing=true;
@@ -102,16 +123,21 @@ public class NoteEditFragment extends Fragment {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+	            //Hide Keyboard when dialogue is launched
+	            hideKeyboard(fragmentLayout);
                 launchChooseCategoryDialogueBuilder();
                 chooseCategoryDialogue.show();
 	            NoteDetailActivity.isChoiceDialogueShowing = true;
             }
         });
-
-
 		return fragmentLayout;
 	}
 
+	//Hide Keyboard method
+	private void hideKeyboard(View fragmentLayout){
+		InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+		inputMethodManager.hideSoftInputFromWindow(fragmentLayout.getWindowToken(),0);
+	}
 
 	private void launchChooseCategoryDialogueBuilder(){
 		AlertDialog.Builder chooseCategoryDialogueBuilder = new AlertDialog.Builder(getContext());
@@ -139,7 +165,7 @@ public class NoteEditFragment extends Fragment {
         chooseCategoryDialogue = chooseCategoryDialogueBuilder.create();
 	}
 
-	private void launchSaveConfirmationDialogue(){
+	public void launchSaveConfirmationDialogue(){
 		AlertDialog.Builder saveConfirmDialogueBuilder = new AlertDialog.Builder(getContext());
 
 		saveConfirmDialogueBuilder.setTitle(R.string.save_confirm_dialogue_title);
@@ -149,6 +175,7 @@ public class NoteEditFragment extends Fragment {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				NoteDetailActivity.isSaveDialogueShowing = false;
+
 			}
 		});
 		saveConfirmDialogueBuilder.setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
@@ -159,7 +186,6 @@ public class NoteEditFragment extends Fragment {
 		});
 		saveConfirmDialogue = saveConfirmDialogueBuilder.create();
 	}
-
 
     @Override
     public void onSaveInstanceState(Bundle saveInstanceState){
@@ -180,9 +206,11 @@ public class NoteEditFragment extends Fragment {
 
     }
 
+
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
 
+		Log.d(MainActivity.APP_ID_KEY,"DESTROYED FRAGMENT=========================");
 	}
 }
