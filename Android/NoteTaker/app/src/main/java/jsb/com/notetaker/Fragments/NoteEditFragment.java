@@ -59,7 +59,6 @@ public class NoteEditFragment extends Fragment {
 		editBody = (EditText) fragmentLayout.findViewById(R.id.edit_note_body_view);
 		editTitle = (EditText)fragmentLayout.findViewById(R.id.edit_note_title_view);
 		saveButton = (Button) fragmentLayout.findViewById(R.id.save_button);
-
 	}
 
 
@@ -91,13 +90,14 @@ public class NoteEditFragment extends Fragment {
 		imageButton.setImageResource(Note.getCategoryImageFromCategory(category));
 		editTitle.setText(title);
 		editBody.setText(body);
-		holdInitialNoteData(title,body,category);
+		holdInitialNoteData(title,body,category, intent.getIntExtra(MainActivity.NOTE_ID_KEY,0));
 	}
 
-	private void holdInitialNoteData(String title, String body, Note.Category category){
+	private void holdInitialNoteData(String title, String body, Note.Category category, int id){
 		NoteDataController.initialCategory = category;
 		NoteDataController.initialNoteBody = body;
 		NoteDataController.initialNoteTitle = title;
+        NoteDataController.chosenNoteID = id;
 	}
 
 
@@ -130,6 +130,7 @@ public class NoteEditFragment extends Fragment {
 	            NoteDetailActivity.isChoiceDialogueShowing = true;
             }
         });
+
 		return fragmentLayout;
 	}
 
@@ -166,7 +167,7 @@ public class NoteEditFragment extends Fragment {
 	}
 
 	public void launchSaveConfirmationDialogue(){
-		AlertDialog.Builder saveConfirmDialogueBuilder = new AlertDialog.Builder(getContext());
+		final AlertDialog.Builder saveConfirmDialogueBuilder = new AlertDialog.Builder(getContext());
 
 		saveConfirmDialogueBuilder.setTitle(R.string.save_confirm_dialogue_title);
 		saveConfirmDialogueBuilder.setMessage(R.string.save_confirm_message);
@@ -176,16 +177,28 @@ public class NoteEditFragment extends Fragment {
 			public void onClick(DialogInterface dialog, int which) {
 				NoteDetailActivity.isSaveDialogueShowing = false;
 
+                Intent intent = new Intent(getActivity(),MainActivity.class);
+
+                intent.putExtra(MainActivity.NOTE_TITLE_KEY,editTitle.getText().toString());
+                intent.putExtra(MainActivity.NOTE_BODY_KEY,editBody.getText().toString());
+                intent.putExtra(MainActivity.NOTE_CATEGORY_KEY,chosenCategory);
+                intent.putExtra(MainActivity.NOTE_ID_KEY,NoteDataController.chosenNoteID);
+                dialog.dismiss();
+
+                startActivity(intent);
 			}
 		});
 		saveConfirmDialogueBuilder.setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				NoteDetailActivity.isSaveDialogueShowing = false;
+                dialog.cancel();
 			}
 		});
+
 		saveConfirmDialogue = saveConfirmDialogueBuilder.create();
 	}
+
 
     @Override
     public void onSaveInstanceState(Bundle saveInstanceState){
@@ -197,13 +210,13 @@ public class NoteEditFragment extends Fragment {
 		    saveInstanceState.putBoolean(MainActivity.CHOICE_DIALOGUE_IS_SHOWING,NoteDetailActivity.isChoiceDialogueShowing);
 		    NoteDetailActivity.isChoiceDialogueShowing = false;
 	    }
+
 	    if(NoteDetailActivity.isSaveDialogueShowing){
 		    Log.d(MainActivity.APP_ID_KEY,"SAVING SAVE DIALOGUE INSTANCE");
 		    saveConfirmDialogue.dismiss();
 		    saveInstanceState.putBoolean(MainActivity.SAVE_DIALOGUE_IS_SHOWING,NoteDetailActivity.isSaveDialogueShowing);
 		    NoteDetailActivity.isSaveDialogueShowing = false;
 	    }
-
     }
 
 

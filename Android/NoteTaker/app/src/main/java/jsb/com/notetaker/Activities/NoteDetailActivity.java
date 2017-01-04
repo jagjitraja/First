@@ -37,7 +37,6 @@ public class NoteDetailActivity extends AppCompatActivity{
 
 	private void setFragment() {
 
-
 		Intent intent = getIntent();
 		String action = intent.getExtras().getString(MainActivity.INTENT_MOTIVE);
 
@@ -79,6 +78,7 @@ public class NoteDetailActivity extends AppCompatActivity{
 		Log.d(MainActivity.APP_ID_KEY, NoteDataController.initialNoteBody);
 		Log.d(MainActivity.APP_ID_KEY, NoteDataController.initialCategory.toString());
 
+		//check changes between initial note data and current note data
 		if(newNoteTitle.equals(NoteDataController.initialNoteTitle)&&
 				newNoteBody.equals(NoteDataController.initialNoteBody)&&
 				newNoteCategory.equals(NoteDataController.initialCategory)){
@@ -91,22 +91,15 @@ public class NoteDetailActivity extends AppCompatActivity{
 
 	@Override
 	public void onBackPressed() {
-		super.onBackPressed();
 
-		noteEditFragment = (NoteEditFragment) fragmentManager.findFragmentById(R.id.note_edit_fragment);
+		noteEditFragment = (NoteEditFragment) fragmentManager.findFragmentByTag("NOTE_EDIT_FRAGMENT");
 
-		if(noteEditFragment!=null && checkChanges()){
+        if(noteEditFragment!=null && checkChanges()) {
+            noteEditFragment.launchSaveConfirmationDialogue();
+            noteEditFragment.saveConfirmDialogue.show();
+        }
 
-
-
-
-			Log.d(MainActivity.APP_ID_KEY,"CHANGES WERE MADE");
-
-			noteEditFragment.launchSaveConfirmationDialogue();
-			noteEditFragment.saveConfirmDialogue.show();
-			return;
-		}
-		Log.d(MainActivity.APP_ID_KEY,"NO CHANGES WERE MADE");
+        super.onBackPressed();
 	}
 
 	@Override

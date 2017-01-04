@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import jsb.com.notetaker.Activities.MainActivity;
 import jsb.com.notetaker.Activities.NoteDetailActivity;
@@ -29,7 +30,8 @@ import jsb.com.notetaker.R;
 public class NoteListFragment extends ListFragment {
 
 	private NoteAdapter noteAdapter;
-	private ArrayList<Note> notes = new ArrayList<>();
+	private static ArrayList<Note> notes = new ArrayList<>();
+
 
 	public NoteListFragment() {
 	}
@@ -38,9 +40,10 @@ public class NoteListFragment extends ListFragment {
 		// Inflate the layout for this fragment
 		super.onActivityCreated(savedInstanceState);
 
-		DataFile dataFile = new DataFile(getActivity());
+        if(notes == null){
+            notes = MainActivity.getDataFile().read_data();
+        }
 
-		notes = dataFile.read_data();
 		notes.add(new Note("One","qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", Note.Category.FINANCIAL));
 		notes.add(new Note("One","qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", Note.Category.PRIVATE));
 		notes.add(new Note("One","qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", Note.Category.MEALS));
@@ -63,6 +66,14 @@ public class NoteListFragment extends ListFragment {
 		registerForContextMenu(getListView());
 
 	}
+
+    public void upDateChangedItem(String title, String body, Note.Category category, int position){
+
+        Note currentNote = notes.get(position);
+        currentNote.setBody(body);
+        currentNote.setTitle(title);
+        currentNote.setCategory(category);
+    }
 
 
 	@Override
@@ -112,10 +123,12 @@ public class NoteListFragment extends ListFragment {
 		intent.putExtra(MainActivity.NOTE_BODY_KEY,body);
 		intent.putExtra(MainActivity.NOTE_CATEGORY_KEY,category);
 		intent.putExtra(MainActivity.INTENT_MOTIVE,noteDetailMotive);
+        intent.putExtra(MainActivity.NOTE_ID_KEY,position);
 
 		NoteDataController.initialCategory = category;
 		NoteDataController.initialNoteBody = body;
 		NoteDataController.initialNoteTitle = title;
+        NoteDataController.chosenNoteID = position;
 
 		startActivity(intent);
 	}

@@ -6,6 +6,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import jsb.com.notetaker.AdaptersAndDataFiles.DataFile;
+import jsb.com.notetaker.AdaptersAndDataFiles.NoteDataController;
 import jsb.com.notetaker.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
 	public final static String NOTE_TITLE_KEY ="NOTE TITLE";
 	public final static String NOTE_BODY_KEY ="NOTE BODY";
 	public final static String NOTE_CATEGORY_KEY ="NOTE CATEGORY";
+	public final static String NOTE_ID_KEY = "NOTE ID KEY";
+
 	public final static String INTENT_MOTIVE = "FRAGMENT TO ADD";
 	public final static String VIEW_NOTE_MOTIVE = "1";;
 	public final static String EDIT_NOTE_MOTIVE = "2";;
@@ -23,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 	public final static String SAVE_DIALOGUE_IS_SHOWING = "SAVE_DIALOGUE IS DISPLAYED ON SCREEN";
 	public final static String CHOICE_DIALOGUE_IS_SHOWING = "CHOICE DIALOGUE IS DISPLAYED ON SCREEN";
 
+    public static DataFile dataFile;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +35,16 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+
+        if(dataFile == null){
+            dataFile = NoteDataController.createDataFile(this);
+        }
+
 	}
+
+    public static DataFile getDataFile(){
+        return dataFile;
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
