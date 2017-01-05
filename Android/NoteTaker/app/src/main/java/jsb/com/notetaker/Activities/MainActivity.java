@@ -1,12 +1,17 @@
 package jsb.com.notetaker.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 import jsb.com.notetaker.AdaptersAndDataFiles.DataFile;
+import jsb.com.notetaker.AdaptersAndDataFiles.Note;
 import jsb.com.notetaker.AdaptersAndDataFiles.NoteDataController;
 import jsb.com.notetaker.R;
 
@@ -19,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 	public final static String NOTE_BODY_KEY ="NOTE BODY";
 	public final static String NOTE_CATEGORY_KEY ="NOTE CATEGORY";
 	public final static String NOTE_ID_KEY = "NOTE ID KEY";
+	public final static String CHANGES_MADE ="CHANGES MADE";
 
 	public final static String INTENT_MOTIVE = "FRAGMENT TO ADD";
 	public final static String VIEW_NOTE_MOTIVE = "1";;
@@ -36,15 +42,20 @@ public class MainActivity extends AppCompatActivity {
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 
+		dataFile = NoteDataController.getDataFile();
         if(dataFile == null){
+	        Log.d(APP_ID_KEY, "NO DATA FILE FOUND");
             dataFile = NoteDataController.createDataFile(this);
         }
-
 	}
 
     public static DataFile getDataFile(){
         return dataFile;
     }
+
+	public static void writeData(ArrayList notes){
+		dataFile.write_data(notes);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -61,10 +72,28 @@ public class MainActivity extends AppCompatActivity {
 		int id = item.getItemId();
 
 		//noinspection SimplifiableIfStatement
-		if (id == R.id.action_settings) {
-			return true;
+		switch (id){
+			case R.id.action_settings:
+				return true;
+
+			case R.id.add_note_button:
+				Intent intent = new Intent(this,NoteDetailActivity.class);
+				intent.putExtra(INTENT_MOTIVE,"3");
+				intent.putExtra(NOTE_CATEGORY_KEY, Note.Category.PRIVATE);
+				intent.putExtra(NOTE_BODY_KEY," ");
+				intent.putExtra(NOTE_TITLE_KEY," ");
+				intent.putExtra(NOTE_ID_KEY, -1);
+				startActivity(intent);
+				return true;
 		}
 
 		return super.onOptionsItemSelected(item);
 	}
+
+	@Override
+	public void onBackPressed() {
+		System.gc();
+		finish();
+	}
+
 }

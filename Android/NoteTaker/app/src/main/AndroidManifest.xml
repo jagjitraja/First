@@ -19,7 +19,8 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".Activities.NoteDetailActivity"
-			android:parentActivityName=".Activities.MainActivity">
+			android:parentActivityName=".Activities.MainActivity"
+			android:noHistory="true">
 		</activity>
 	</application>
 

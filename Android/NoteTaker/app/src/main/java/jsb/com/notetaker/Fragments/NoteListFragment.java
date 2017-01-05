@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,13 +14,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 import jsb.com.notetaker.Activities.MainActivity;
 import jsb.com.notetaker.Activities.NoteDetailActivity;
-import jsb.com.notetaker.AdaptersAndDataFiles.DataFile;
-import jsb.com.notetaker.AdaptersAndDataFiles.NoteAdapter;
 import jsb.com.notetaker.AdaptersAndDataFiles.Note;
+import jsb.com.notetaker.AdaptersAndDataFiles.NoteAdapter;
 import jsb.com.notetaker.AdaptersAndDataFiles.NoteDataController;
 import jsb.com.notetaker.R;
 
@@ -30,9 +29,7 @@ import jsb.com.notetaker.R;
 public class NoteListFragment extends ListFragment {
 
 	private NoteAdapter noteAdapter;
-	private static ArrayList<Note> notes = new ArrayList<>();
-
-
+	private ArrayList notes = new ArrayList();
 	public NoteListFragment() {
 	}
 
@@ -41,24 +38,14 @@ public class NoteListFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 
         if(notes == null){
+	        Log.d(MainActivity.APP_ID_KEY,"THE ARRAY LIST IS NULL");
             notes = MainActivity.getDataFile().read_data();
         }
+		Intent intent = getActivity().getIntent();
 
-		notes.add(new Note("One","qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", Note.Category.FINANCIAL));
-		notes.add(new Note("One","qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", Note.Category.PRIVATE));
-		notes.add(new Note("One","qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", Note.Category.MEALS));
-		notes.add(new Note("One","qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", Note.Category.WORK));
-		notes.add(new Note("One","qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", Note.Category.STUDIES));
-		notes.add(new Note("One","qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", Note.Category.FINANCIAL));
-		notes.add(new Note("One","qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", Note.Category.PRIVATE));
-		notes.add(new Note("One","qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", Note.Category.MEALS));
-		notes.add(new Note("One","qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", Note.Category.WORK));
-		notes.add(new Note("One","qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", Note.Category.STUDIES));
-		notes.add(new Note("One","qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", Note.Category.FINANCIAL));
-		notes.add(new Note("One","qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", Note.Category.PRIVATE));
-		notes.add(new Note("One","qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", Note.Category.MEALS));
-		notes.add(new Note("One","qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", Note.Category.WORK));
-		notes.add(new Note("One","qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", Note.Category.STUDIES));
+		if(intent.getBooleanExtra(MainActivity.CHANGES_MADE,false)) {
+			upDateChangedItem(intent);
+		}
 		noteAdapter = new NoteAdapter(getActivity(),notes);
 		setListAdapter(noteAdapter);
 
@@ -67,13 +54,27 @@ public class NoteListFragment extends ListFragment {
 
 	}
 
-    public void upDateChangedItem(String title, String body, Note.Category category, int position){
+    public void upDateChangedItem(Intent intent){
 
-        Note currentNote = notes.get(position);
-        currentNote.setBody(body);
-        currentNote.setTitle(title);
-        currentNote.setCategory(category);
+	    String title = intent.getExtras().getString(MainActivity.NOTE_TITLE_KEY);
+	    String body = intent.getExtras().getString(MainActivity.NOTE_BODY_KEY);
+	    Note.Category category = (Note.Category) intent.getSerializableExtra(MainActivity.NOTE_CATEGORY_KEY);
+	    int position =  intent.getExtras().getInt(MainActivity.NOTE_ID_KEY);
+
+	    if(position!=-1) {
+		    Note currentNote = (Note) notes.get(position);
+		    currentNote.setBody(body);
+		    currentNote.setTitle(title);
+		    currentNote.setCategory(category);
+	    }
+
+	    else{
+		    Note newNote = new Note(title,body,category);
+		    notes.add(newNote);
+	    }
+
     }
+
 
 
 	@Override
@@ -85,7 +86,6 @@ public class NoteListFragment extends ListFragment {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-
 		MenuInflater menuInflater = getActivity().getMenuInflater();
 		menuInflater.inflate(R.menu.long_press_context_menu,menu);
 	}
@@ -133,4 +133,11 @@ public class NoteListFragment extends ListFragment {
 		startActivity(intent);
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+
+		MainActivity.writeData(notes);
+
+	}
 }

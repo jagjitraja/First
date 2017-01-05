@@ -182,9 +182,13 @@ public class NoteEditFragment extends Fragment {
                 intent.putExtra(MainActivity.NOTE_TITLE_KEY,editTitle.getText().toString());
                 intent.putExtra(MainActivity.NOTE_BODY_KEY,editBody.getText().toString());
                 intent.putExtra(MainActivity.NOTE_CATEGORY_KEY,chosenCategory);
-                intent.putExtra(MainActivity.NOTE_ID_KEY,NoteDataController.chosenNoteID);
-                dialog.dismiss();
+				intent.putExtra(MainActivity.CHANGES_MADE,true);
+				intent.putExtra(MainActivity.NOTE_ID_KEY,NoteDataController.chosenNoteID);
+				//clears back stack so that main activity does not relaunch on back pressed
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
 
+				dialog.dismiss();
+				getActivity().finish();
                 startActivity(intent);
 			}
 		});
@@ -192,7 +196,8 @@ public class NoteEditFragment extends Fragment {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				NoteDetailActivity.isSaveDialogueShowing = false;
-                dialog.cancel();
+				dialog.cancel();
+				getActivity().finish();
 			}
 		});
 
@@ -218,6 +223,18 @@ public class NoteEditFragment extends Fragment {
 		    NoteDetailActivity.isSaveDialogueShowing = false;
 	    }
     }
+
+	public String getnewNoteTitle(){
+		return editTitle.getText().toString();
+	}
+
+	public String getnewNoteBody(){
+		return editBody.getText().toString();
+	}
+
+	public Note.Category getnewNoteCategory(){
+		return chosenCategory;
+	}
 
 
 	@Override

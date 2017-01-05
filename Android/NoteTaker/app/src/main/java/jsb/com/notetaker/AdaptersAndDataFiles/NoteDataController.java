@@ -15,9 +15,7 @@ public class NoteDataController {
     public static DataFile dataFile;
 
     public static DataFile createDataFile(Context c){
-
        dataFile = new DataFile(c);
-
         return dataFile;
     }
     public static DataFile getDataFile(){

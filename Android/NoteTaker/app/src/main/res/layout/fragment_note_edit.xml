@@ -2,45 +2,59 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-				android:padding="@dimen/padding"
+                android:fitsSystemWindows="true"
 				android:id="@+id/note_edit_fragment"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 tools:context="jsb.com.notetaker.Fragments.NoteEditFragment">
 
-
-	<ImageButton
-		android:layout_width="100dp"
-		android:layout_height="100dp"
-		app:srcCompat="@drawable/s"
-		android:id="@+id/edit_note_item_icon"/>
-
-	<ScrollView
+	<LinearLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_toEndOf="@id/edit_note_item_icon"
-		android:layout_alignTop="@id/edit_note_item_icon">
+		android:layout_height="110dp"
+		android:elevation="@dimen/elavation"
+		android:padding="@dimen/padding"
+		android:background="@color/shadow"
+		android:id="@+id/header">
 
-		<EditText
-			android:text="TextView"
-			android:layout_marginLeft="@dimen/margin"
+		<ImageButton
+			android:layout_width="100dp"
+			android:layout_height="100dp"
+			app:srcCompat="@drawable/s"
+			android:padding="0dp"
+			android:id="@+id/edit_note_item_icon"/>
+
+		<ScrollView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:id="@+id/edit_note_title_view"
-			android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
-	</ScrollView>
+			android:layout_toEndOf="@id/edit_note_item_icon"
+			android:layout_alignTop="@id/edit_note_item_icon">
+
+			<EditText
+				android:text="TextView"
+				android:layout_marginLeft="@dimen/margin"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/edit_note_title_view"
+				android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+				android:maxLines="1"/>
+		</ScrollView>
+	</LinearLayout>
 
 	<ScrollView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_below="@id/edit_note_item_icon">
+		android:layout_below="@id/header"
+		android:padding="@dimen/padding">
 
+		<LinearLayout android:orientation="vertical"
+		              android:layout_height="match_parent"
+		              android:layout_width="match_parent">
 		<EditText
 			android:text="TextView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:id="@+id/edit_note_body_view"
 			android:layout_marginTop="@dimen/margin"/>
-	</ScrollView>
+
 
 	<!--<Button
 		android:layout_width="wrap_content"
@@ -53,8 +67,9 @@
 		android:layout_height="wrap_content"
 		android:id="@+id/save_button"
 		android:text="@string/save_button"
-		android:layout_alignParentBottom="true" />
+		android:layout_alignParentBottom="true"
+		android:elevation="5dp"/>
 
-
-
+		</LinearLayout>
+	</ScrollView>
 </RelativeLayout>
