@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
+                android:id="@+id/note_item"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/note_item_height"
-                android:id="@+id/note_item"
+                android:orientation="vertical"
                 android:padding="@dimen/padding">
 
 	<ImageView
+		android:id="@+id/note_image"
 		android:layout_width="@dimen/note_item_height"
 		android:layout_height="@dimen/note_item_height"
-		android:background="@drawable/f"
-		android:id="@+id/note_image"/>
+		android:background="@drawable/f"/>
 
 	<TextView
-		android:layout_width="wrap_content"
-		android:layout_marginStart="@dimen/margin"
-		android:layout_height="wrap_content"
-		android:layout_toRightOf="@id/note_image"
-		android:text="TITLE"
 		android:id="@+id/note_title"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
 		android:layout_alignTop="@id/note_image"
+		android:layout_marginStart="@dimen/margin"
+		android:layout_toRightOf="@id/note_image"
 		android:maxLines="1"
+		android:text="TITLE"
 		android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
 	<TextView
-		android:layout_width="wrap_content"
-		android:layout_marginStart="@dimen/margin"
-		android:layout_height="wrap_content"
-		android:layout_toRightOf="@id/note_image"
-		android:layout_below="@id/note_title"
-		android:text="BODY"
-		android:maxLines="3"
 		android:id="@+id/note_body"
-		android:textAppearance="@style/TextAppearance.AppCompat.Small"
-		android:layout_alignBottom="@id/note_image"/>
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignBottom="@id/note_image"
+		android:layout_below="@id/note_title"
+		android:layout_marginStart="@dimen/margin"
+		android:layout_toRightOf="@id/note_image"
+		android:maxLines="3"
+		android:text="BODY"
+		android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
 
 
 </RelativeLayout>

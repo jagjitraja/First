@@ -11,6 +11,8 @@
 
 	<string name="view_note">View Note</string>
 	<string name="edit_note">Edit Note</string>
+	<string name="edit">Edit</string>
+	<string name="delete">Delete</string>
 
 
 </resources>

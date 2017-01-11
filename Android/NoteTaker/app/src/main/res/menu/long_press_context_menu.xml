@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:android="http://schemas.android.com/apk/res/android">
+<menu
+	xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<item android:id="@+id/delete" android:title="Delete"
-	      android:visible="false">Delete</item>
-	<item android:id="@+id/edit" android:title="Edit">Edit</item>
+	<item
+		android:id="@+id/delete"
+		android:title="@string/delete"
+		android:visible="true">
+	</item>
+	<item
+		android:id="@+id/edit"
+		android:title="@string/edit"
+		android:visible="true">
+	</item>
 
 </menu>

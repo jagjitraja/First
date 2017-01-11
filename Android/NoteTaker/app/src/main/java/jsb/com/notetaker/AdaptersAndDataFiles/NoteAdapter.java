@@ -24,14 +24,8 @@ import jsb.com.notetaker.R;
 
 public class NoteAdapter extends ArrayAdapter<Note> {
 
-	public static class ViewHolder{
-		ImageView noteImage;
-		TextView noteTitle;
-		TextView noteBody;
-	}
-
 	public NoteAdapter(Context context, ArrayList<Note> notes) {
-		super(context,0, notes);
+		super(context, 0, notes);
 	}
 
 	@NonNull
@@ -58,5 +52,11 @@ public class NoteAdapter extends ArrayAdapter<Note> {
 			return convertView;
 		}
 		return convertView;
+	}
+
+	public static class ViewHolder {
+		ImageView noteImage;
+		TextView noteTitle;
+		TextView noteBody;
 	}
 }

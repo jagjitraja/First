@@ -3,6 +3,7 @@
           package="jsb.com.notetaker">
 
 	<application
+		android:name=".AdaptersAndDataFiles.NoteDataController"
 		android:allowBackup="true"
 		android:icon="@mipmap/ic_launcher"
 		android:label="@string/app_name"
@@ -18,9 +19,11 @@
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
-		<activity android:name=".Activities.NoteDetailActivity"
+		<activity
+			android:name=".Activities.NoteDetailActivity"
+			android:noHistory="true"
 			android:parentActivityName=".Activities.MainActivity"
-			android:noHistory="true">
+			android:theme="@style/A">
 		</activity>
 	</application>
 

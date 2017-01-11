@@ -3,15 +3,16 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="jsb.com.notetaker.Activities.MainActivity">
 
-		<item
-			android:id="@+id/action_settings"
-			android:orderInCategory="02"
-			android:title="@string/action_settings"
-			app:showAsAction="never"/>
+	<item
+		android:id="@+id/action_settings"
+		android:orderInCategory="02"
+		android:title="@string/action_settings"
+		app:showAsAction="never"/>
 
-		<item android:id="@+id/add_note_button"
-		      android:orderInCategory="01"
-		      android:title="@string/add_note"
-		      app:showAsAction="ifRoom"/>
+	<item
+		android:id="@+id/add_note_button"
+		android:orderInCategory="01"
+		android:title="@string/add_note"
+		app:showAsAction="ifRoom"/>
 
 </menu>

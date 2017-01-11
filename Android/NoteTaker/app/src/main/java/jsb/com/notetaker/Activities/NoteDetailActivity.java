@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import jsb.com.notetaker.AdaptersAndDataFiles.Note;
@@ -16,10 +17,10 @@ import jsb.com.notetaker.R;
 
 public class NoteDetailActivity extends AppCompatActivity {
 
-	private FragmentManager fragmentManager;
-	private FragmentTransaction fragmentTransaction;
 	public static boolean isSaveDialogueShowing;
 	public static boolean isChoiceDialogueShowing;
+	private FragmentManager fragmentManager;
+	private FragmentTransaction fragmentTransaction;
 	private NoteEditFragment noteEditFragment;
 
 	private ActionBar actionBar;
@@ -32,15 +33,13 @@ public class NoteDetailActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_note_detail);
-
-
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
 		actionBar = getSupportActionBar();
-
 		fragmentManager = getSupportFragmentManager();
 		fragmentTransaction = fragmentManager.beginTransaction();
 		setFragment();
 	}
-
 
 	private void setFragment() {
 		Intent intent = getIntent();
@@ -97,13 +96,9 @@ public class NoteDetailActivity extends AppCompatActivity {
 		Log.d(MainActivity.APP_ID_KEY, NoteDataController.initialCategory.toString());
 
 		//check changes between initial note data and current note data
-		if (newNoteTitle.equals(NoteDataController.initialNoteTitle) &&
+		return !(newNoteTitle.equals(NoteDataController.initialNoteTitle) &&
 				newNoteBody.equals(NoteDataController.initialNoteBody) &&
-				newNoteCategory.equals(NoteDataController.initialCategory)) {
-			return false;
-		} else {
-			return true;
-		}
+				newNoteCategory.equals(NoteDataController.initialCategory));
 	}
 
 	@Override
