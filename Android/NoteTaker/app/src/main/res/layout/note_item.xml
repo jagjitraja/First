@@ -9,8 +9,7 @@
 	<ImageView
 		android:id="@+id/note_image"
 		android:layout_width="@dimen/note_item_height"
-		android:layout_height="@dimen/note_item_height"
-		android:background="@drawable/f"/>
+		android:layout_height="@dimen/note_item_height"/>
 
 	<TextView
 		android:id="@+id/note_title"

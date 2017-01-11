@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-
 import jsb.com.notetaker.AdaptersAndDataFiles.Note;
 import jsb.com.notetaker.AdaptersAndDataFiles.NoteDataController;
 import jsb.com.notetaker.Fragments.NoteEditFragment;
@@ -22,7 +21,6 @@ public class NoteDetailActivity extends AppCompatActivity {
 	private FragmentManager fragmentManager;
 	private FragmentTransaction fragmentTransaction;
 	private NoteEditFragment noteEditFragment;
-
 	private ActionBar actionBar;
 	private String newNoteTitle;
 	private String newNoteBody;

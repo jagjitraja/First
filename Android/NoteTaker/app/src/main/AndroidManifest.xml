@@ -23,7 +23,7 @@
 			android:name=".Activities.NoteDetailActivity"
 			android:noHistory="true"
 			android:parentActivityName=".Activities.MainActivity"
-			android:theme="@style/A">
+			android:theme="@style/AppTheme.NoActionBar">
 		</activity>
 	</application>
 
