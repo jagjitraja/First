@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/note_item"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/note_item_height"
@@ -8,8 +9,39 @@
 
 	<ImageView
 		android:id="@+id/note_image"
-		android:layout_width="@dimen/note_item_height"
-		android:layout_height="@dimen/note_item_height"/>
+		android:layout_width="@dimen/note_icon_height"
+		android:layout_height="@dimen/note_icon_height"
+		android:contentDescription=""
+		android:background="@android:color/darker_gray"
+		tools:ignore="ContentDescription"/>
+
+	<RelativeLayout
+		android:orientation="vertical"
+		android:id="@+id/dateSection"
+		android:layout_width="75dp"
+		android:layout_height="match_parent"
+		android:layout_alignParentTop="true"
+		android:layout_alignParentEnd="true">
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/date_label"
+			android:text="@string/due"
+			android:layout_alignParentTop="true"
+			android:layout_alignParentEnd="true"/>
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="0dp"
+			android:textAppearance="@style/TextAppearance.AppCompat.Small"
+			android:id="@+id/note_date"
+			android:textColor="@color/colorAccent"
+			android:hint="@string/due_date"
+			android:layout_below="@+id/date_label"
+			android:layout_alignParentEnd="true"/>
+	</RelativeLayout>
 
 	<TextView
 		android:id="@+id/note_title"
@@ -18,21 +50,27 @@
 		android:layout_alignTop="@id/note_image"
 		android:layout_marginStart="@dimen/margin"
 		android:layout_toRightOf="@id/note_image"
+		android:layout_toLeftOf="@id/dateSection"
 		android:maxLines="1"
-		android:text="TITLE"
-		android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+		android:maxLength="15"
+		android:text="@string/title"
+		android:scrollHorizontally="false"
+		android:ellipsize="end"
+		android:textAppearance="@style/TextAppearance.AppCompat.Large"
+		tools:ignore="RelativeOverlap,RtlHardcoded"/>
 
 	<TextView
 		android:id="@+id/note_body"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_alignBottom="@id/note_image"
 		android:layout_below="@id/note_title"
 		android:layout_marginStart="@dimen/margin"
 		android:layout_toRightOf="@id/note_image"
+		android:layout_toLeftOf="@id/dateSection"
 		android:maxLines="3"
-		android:text="BODY"
-		android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+		android:text="@string/body"
+		android:textAppearance="@style/TextAppearance.AppCompat.Small"
+		tools:ignore="RtlHardcoded"/>
 
 
 </RelativeLayout>

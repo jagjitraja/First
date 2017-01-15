@@ -13,6 +13,10 @@
 	<string name="edit_note">Edit Note</string>
 	<string name="edit">Edit</string>
 	<string name="delete">Delete</string>
+	<string name="body">BODY</string>
+	<string name="title">TITLE</string>
+	<string name="due_date">Date</string>
+	<string name="due">Due:</string>
 
 
 </resources>

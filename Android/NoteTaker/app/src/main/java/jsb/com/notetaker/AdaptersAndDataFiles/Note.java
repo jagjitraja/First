@@ -1,6 +1,7 @@
 package jsb.com.notetaker.AdaptersAndDataFiles;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import jsb.com.notetaker.R;
 
@@ -73,8 +74,13 @@ public class Note implements Serializable {
 		this.category = category;
 	}
 
-	public long getDate() {
-		return date;
+	public String getDate() {
+
+		Date regularDate = new Date();
+		regularDate.setTime(date);
+
+		String dateString = regularDate.toString().substring(0,16);
+		return dateString;
 	}
 
 	public void setDate(long date) {
@@ -118,7 +124,7 @@ public class Note implements Serializable {
 	}
 
 	public String toString() {
-		return "Title: " + title + " Body: " + body + " Date: " + date + " Category: " + category;
+		return "Title: " + title + " Body: " + body + " Date: " + getDate().toString() + " Category: " + category;
 	}
 
 	public enum Category {PRIVATE, WORK, FINANCIAL, STUDIES, MEALS}

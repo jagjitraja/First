@@ -5,7 +5,9 @@
 	<dimen name="fab_margin">16dp</dimen>
 	<dimen name="padding">10dp</dimen>
 	<dimen name="margin">10dp</dimen>
-	<dimen name="note_item_height">80dp</dimen>
+	<dimen name="note_item_height">100dp</dimen>
+	<dimen name="note_icon_height">80dp</dimen>
 	<dimen name="round_icon_radius">70dp</dimen>
 	<dimen name="elavation">5dp</dimen>
+	<dimen name="end_margin">5dp</dimen>
 </resources>

@@ -88,6 +88,7 @@ public class NoteListFragment extends ListFragment {
 			notes.remove(position);
 		}
 
+		getActivity().getIntent().removeExtra(MainActivity.CHANGES_MADE);
 	}
 
 	@Override

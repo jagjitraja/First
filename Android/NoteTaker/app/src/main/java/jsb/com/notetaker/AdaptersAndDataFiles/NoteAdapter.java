@@ -43,12 +43,21 @@ public class NoteAdapter extends ArrayAdapter<Note> {
 				viewHolder.noteImage = (ImageView) convertView.findViewById(R.id.note_image);
 				viewHolder.noteBody = (TextView) convertView.findViewById(R.id.note_body);
 				viewHolder.noteTitle = (TextView) convertView.findViewById(R.id.note_title);
+				viewHolder.noteDate = (TextView) convertView.findViewById(R.id.note_date);
+				viewHolder.dateLabel = (TextView) convertView.findViewById(R.id.date_label);
 			} else {
 				viewHolder = (ViewHolder) convertView.getTag();
 			}
+
+			viewHolder.noteTitle.setTypeface(NoteDataController.getTitleFont());
+			viewHolder.noteBody.setTypeface(NoteDataController.getBodyFont());
+			viewHolder.noteDate.setTypeface(NoteDataController.getDateFont());
+			viewHolder.dateLabel.setTypeface(NoteDataController.getDateFont());
+
 			viewHolder.noteTitle.setText(note.getTitle());
 			viewHolder.noteBody.setText(note.getBody());
 			viewHolder.noteImage.setImageResource(note.getCategoryImage());
+			viewHolder.noteDate.setText(note.getDate());
 			return convertView;
 		}
 		return convertView;
@@ -58,5 +67,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
 		ImageView noteImage;
 		TextView noteTitle;
 		TextView noteBody;
+		TextView noteDate;
+		TextView dateLabel;
 	}
 }

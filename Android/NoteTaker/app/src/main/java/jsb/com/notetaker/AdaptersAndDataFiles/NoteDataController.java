@@ -2,6 +2,7 @@ package jsb.com.notetaker.AdaptersAndDataFiles;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.Log;
 
 import java.io.File;
@@ -21,44 +22,24 @@ import jsb.com.notetaker.Activities.MainActivity;
 
 public class NoteDataController extends Application {
 
+	private static final String fileName = "data.txt";
 	public static String initialNoteTitle = "";
 	public static String initialNoteBody = "";
 	public static Note.Category initialCategory = Note.Category.PRIVATE;
 	public static int chosenNoteID = 0;
-
 	private static ArrayList readNotes;
-	private static final String fileName = "data.txt";
 	private static FileOutputStream fileOutputStream;
-	private FileInputStream fileReader;
 	private static Context context;
+	private FileInputStream fileReader;
 
-
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		context = getApplicationContext();
-		readNotes = read_data();
-
-		for (File x : context.getFilesDir().listFiles()) {
-			Log.d(MainActivity.APP_ID_KEY, x.getName());
-		}
-	}
-
-	public static void setReadNotesOnTerminate(ArrayList notesOnTerminate){
+	public static void setReadNotesOnTerminate(ArrayList notesOnTerminate) {
 		readNotes = notesOnTerminate;
 		write_data(notesOnTerminate);
-	}
-
-	public void onPause() {
-		Log.d(MainActivity.APP_ID_KEY,"TERMINATING");
-
-		super.onTerminate();
 	}
 
 	public static void write_data(ArrayList<Note> notes) {
 
 		Log.d(MainActivity.APP_ID_KEY, "WRITING DATA");
-
 		try {
 			fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
 			ObjectOutputStream objectWriter = new ObjectOutputStream(fileOutputStream);
@@ -75,6 +56,29 @@ public class NoteDataController extends Application {
 
 	}
 
+	public static ArrayList getReadNotes() {
+		if (readNotes == null) {
+			readNotes = new ArrayList();
+		}
+		return readNotes;
+	}
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		context = getApplicationContext();
+		readNotes = read_data();
+
+		for (File x : context.getFilesDir().listFiles()) {
+			Log.d(MainActivity.APP_ID_KEY, x.getName());
+		}
+	}
+
+	public void onPause() {
+		Log.d(MainActivity.APP_ID_KEY, "TERMINATING");
+		super.onTerminate();
+	}
+
 	public ArrayList<Note> read_data() {
 		ArrayList<Note> notesRead = new ArrayList<Note>();
 
@@ -83,13 +87,13 @@ public class NoteDataController extends Application {
 		try {
 			fileReader = context.openFileInput(fileName);
 
-			Log.d(MainActivity.APP_ID_KEY,"READING DATA ------------------ ");
+			Log.d(MainActivity.APP_ID_KEY, "READING DATA ------------------ ");
 
 			objectReader = new ObjectInputStream(fileReader);
 			notesRead = (ArrayList<Note>) objectReader.readObject();
 
-			for(Note v: notesRead){
-				Log.d(MainActivity.APP_ID_KEY,"THIS NOTE WAS READ => "+v.toString());
+			for (Note v : notesRead) {
+				Log.d(MainActivity.APP_ID_KEY, "THIS NOTE WAS READ => " + v.toString());
 			}
 
 
@@ -100,21 +104,19 @@ public class NoteDataController extends Application {
 
 			try {
 				fileReader = context.openFileInput(fileName);
-				Log.d(MainActivity.APP_ID_KEY,"READING DATA ------------------ ");
+				Log.d(MainActivity.APP_ID_KEY, "READING DATA ------------------ ");
 
 				objectReader = new ObjectInputStream(fileReader);
 				notesRead = (ArrayList<Note>) objectReader.readObject();
 
-				for(Note v: notesRead){
-					Log.d(MainActivity.APP_ID_KEY,"THIS NOTE WAS READ => "+v.toString());
+				for (Note v : notesRead) {
+					Log.d(MainActivity.APP_ID_KEY, "THIS NOTE WAS READ => " + v.toString());
 				}
-
 
 				Log.d(MainActivity.APP_ID_KEY, notesRead.size() + "-------------------------------");
 				objectReader.close();
 				fileReader.close();
-
-				Log.d(MainActivity.APP_ID_KEY,"CRASHED HERE FILE NOT FOUND ");
+				Log.d(MainActivity.APP_ID_KEY, "CRASHED HERE FILE NOT FOUND ");
 				e.printStackTrace();
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
@@ -123,29 +125,31 @@ public class NoteDataController extends Application {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-
-
 		} catch (IOException e) {
 
-			Log.d(MainActivity.APP_ID_KEY,"CRASHED HERE IO EXCEPTION ");
+			Log.d(MainActivity.APP_ID_KEY, "CRASHED HERE IO EXCEPTION ");
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 
-			Log.d(MainActivity.APP_ID_KEY,"CRASHED HERE CLASS NOT FOUND ");
+			Log.d(MainActivity.APP_ID_KEY, "CRASHED HERE CLASS NOT FOUND ");
 			e.printStackTrace();
 		}
-
-
-
 		readNotes = notesRead;
 		return notesRead;
 	}
 
-	public static ArrayList getReadNotes(){
-		if(readNotes==null){
-			readNotes = new ArrayList();
-		}
-		return readNotes;
+
+	public static Typeface getTitleFont(){
+		Typeface titleFont = Typeface.createFromAsset(context.getAssets(),"fonts/Kalam-Bold.ttf");
+		return titleFont;
+	}
+	public static Typeface getBodyFont(){
+		Typeface titleFont = Typeface.createFromAsset(context.getAssets(),"fonts/Kalam-Regular.ttf");
+		return titleFont;
+	}
+	public static Typeface getDateFont(){
+		Typeface titleFont = Typeface.createFromAsset(context.getAssets(),"fonts/Kalam-Light.ttf");
+		return titleFont;
 	}
 
 }

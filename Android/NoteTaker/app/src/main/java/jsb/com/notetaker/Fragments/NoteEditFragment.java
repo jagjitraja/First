@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +58,11 @@ public class NoteEditFragment extends Fragment {
 	private void getUIElements(View fragmentLayout) {
 		imageButton = (ImageButton) fragmentLayout.findViewById(R.id.edit_note_item_icon);
 		editBody = (EditText) fragmentLayout.findViewById(R.id.edit_note_body_view);
+		editBody.setHint("Enter Note Body");
 		editTitle = (EditText) fragmentLayout.findViewById(R.id.edit_note_title_view);
+		editTitle.setHint("Enter Note Title");
+		//limit title length to 15 characters
+		editTitle.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
 		saveButton = (Button) fragmentLayout.findViewById(R.id.save_button);
 	}
 
