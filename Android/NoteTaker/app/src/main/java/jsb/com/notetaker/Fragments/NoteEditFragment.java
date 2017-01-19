@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import jsb.com.notetaker.Activities.MainActivity;
 import jsb.com.notetaker.Activities.NoteDetailActivity;
@@ -36,6 +37,7 @@ public class NoteEditFragment extends Fragment {
 	private AlertDialog chooseCategoryDialogue;
 	private Note.Category chosenCategory;
 	private Button saveButton;
+	private TextView editDate;
 
 	/*private UpdateNoteData updateNoteData;
 
@@ -58,9 +60,15 @@ public class NoteEditFragment extends Fragment {
 	private void getUIElements(View fragmentLayout) {
 		imageButton = (ImageButton) fragmentLayout.findViewById(R.id.edit_note_item_icon);
 		editBody = (EditText) fragmentLayout.findViewById(R.id.edit_note_body_view);
-		editBody.setHint("Enter Note Body");
 		editTitle = (EditText) fragmentLayout.findViewById(R.id.edit_note_title_view);
-		editTitle.setHint("Enter Note Title");
+		editDate = (TextView)fragmentLayout.findViewById(R.id.edit_note_date);
+		TextView dateLabel = (TextView)fragmentLayout.findViewById(R.id.date_label_Note_edit_view);
+
+		editTitle.setTypeface(NoteDataController.getTitleFont());
+		editDate.setTypeface(NoteDataController.getDateFont());
+		editBody.setTypeface(NoteDataController.getBodyFont());
+		dateLabel.setTypeface(NoteDataController.getDateFont());
+
 		//limit title length to 15 characters
 		editTitle.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
 		saveButton = (Button) fragmentLayout.findViewById(R.id.save_button);
@@ -68,8 +76,10 @@ public class NoteEditFragment extends Fragment {
 
 
 	private void fillNoteData(Intent intent, Bundle savedInstanceState) {
-		final String title = intent.getExtras().getString(MainActivity.NOTE_TITLE_KEY);
+		String title = intent.getExtras().getString(MainActivity.NOTE_TITLE_KEY);
 		String body = intent.getExtras().getString(MainActivity.NOTE_BODY_KEY);
+		String date = intent.getStringExtra(MainActivity.NOTE_DATE_KEY);
+
 		Note.Category category;
 
 		if (savedInstanceState == null) {
@@ -94,6 +104,7 @@ public class NoteEditFragment extends Fragment {
 		imageButton.setImageResource(Note.getCategoryImageFromCategory(category));
 		editTitle.setText(title);
 		editBody.setText(body);
+		editDate.setText(date);
 		holdInitialNoteData(title, body, category, intent.getIntExtra(MainActivity.NOTE_ID_KEY, 0));
 	}
 
@@ -182,7 +193,6 @@ public class NoteEditFragment extends Fragment {
 				NoteDetailActivity.isSaveDialogueShowing = false;
 
 				Intent intent = new Intent(getActivity(), MainActivity.class);
-
 				intent.putExtra(MainActivity.NOTE_TITLE_KEY, editTitle.getText().toString());
 				intent.putExtra(MainActivity.NOTE_BODY_KEY, editBody.getText().toString());
 				intent.putExtra(MainActivity.NOTE_CATEGORY_KEY, chosenCategory);

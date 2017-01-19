@@ -11,22 +11,34 @@ import jsb.com.notetaker.R;
 
 public class Note implements Serializable {
 
+	private int ID;
 	private String title;
 	private String body;
 	private long date;
 	private Category category;
-	public Note(String title, String body, long date, Category category) {
+	private String stringDate;
+
+	public Note(String title, String body, String date, Category category,int id) {
 		this.body = body;
+		this.ID = id;
 		this.title = title;
-		this.date = date;
+		this.stringDate = date;
 		this.category = category;
 	}
 
-	public Note(String title, String body, Category category) {
+	public Note(String title, String body, Category category, int i) {
 		this.body = body;
 		this.title = title;
 		this.date = System.currentTimeMillis();
 		this.category = category;
+	}
+
+	public int getID(){
+		return this.ID;
+	}
+
+	public void setID(int ID) {
+		this.ID = ID;
 	}
 
 	public static int getCategoryImageFromCategory(Category category) {
@@ -45,7 +57,6 @@ public class Note implements Serializable {
 			default:
 				return R.drawable.p;
 		}
-
 	}
 
 	public static Category getCategoryFromString(String s) {
@@ -75,12 +86,13 @@ public class Note implements Serializable {
 	}
 
 	public String getDate() {
-
 		Date regularDate = new Date();
 		regularDate.setTime(date);
-
-		String dateString = regularDate.toString().substring(0,16);
-		return dateString;
+		String dateString = regularDate.toString().substring(0, 16);
+		if (stringDate == null) {
+			stringDate = dateString;
+		}
+		return stringDate;
 	}
 
 	public void setDate(long date) {
@@ -124,7 +136,7 @@ public class Note implements Serializable {
 	}
 
 	public String toString() {
-		return "Title: " + title + " Body: " + body + " Date: " + getDate().toString() + " Category: " + category;
+		return "Title: " + title + " Body: " + body + " Date: " + stringDate + " Category: " + category;
 	}
 
 	public enum Category {PRIVATE, WORK, FINANCIAL, STUDIES, MEALS}

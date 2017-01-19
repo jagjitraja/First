@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import jsb.com.notetaker.Activities.MainActivity;
 import jsb.com.notetaker.Activities.NoteDetailActivity;
+import jsb.com.notetaker.AdaptersAndDataFiles.DataBaseController;
 import jsb.com.notetaker.AdaptersAndDataFiles.Note;
 import jsb.com.notetaker.AdaptersAndDataFiles.NoteAdapter;
 import jsb.com.notetaker.AdaptersAndDataFiles.NoteDataController;
@@ -34,14 +35,13 @@ public class NoteListFragment extends ListFragment {
 	public NoteListFragment() {
 	}
 
-
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		super.onActivityCreated(savedInstanceState);
 
 		if(savedInstanceState!=null){
 			Log.d(MainActivity.APP_ID_KEY,"SAVED INSTANCE IS NOT NULL");
-			 notes = (ArrayList) savedInstanceState.getSerializable(MainActivity.SAVE_NOTES);
+			 notes = (ArrayList<Note>) savedInstanceState.getSerializable(MainActivity.SAVE_NOTES);
 		}
 		else if (notes == null) {
 			Log.d(MainActivity.APP_ID_KEY, "THE ARRAY LIST IS NULL");
@@ -79,15 +79,22 @@ public class NoteListFragment extends ListFragment {
 				currentNote.setBody(body);
 				currentNote.setTitle(title);
 				currentNote.setCategory(category);
+				DataBaseController.getInstance().updateNote(currentNote);
 			} else {
-				Note newNote = new Note(title, body, category);
+				Note newNote = new Note(title, body, category,notes.size()+1);
+				DataBaseController.getInstance().write_Note(newNote);
+
+				//TODO - Temporary because it wont be written to database.
+				//Just for purpose while app is running therefore database wont be frequently opened
 				notes.add(newNote);
 			}
 		}
 		else{
-			notes.remove(position);
+			Log.d(MainActivity.APP_ID_KEY,"IN DELETING PART");
+			Note deleted = notes.get(position);
+			DataBaseController.getInstance().deleteNote(deleted);
+			notes.remove(deleted);
 		}
-
 		getActivity().getIntent().removeExtra(MainActivity.CHANGES_MADE);
 	}
 
@@ -104,12 +111,10 @@ public class NoteListFragment extends ListFragment {
 		menuInflater.inflate(R.menu.long_press_context_menu, menu);
 	}
 
-
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-
 		int menuItemID = item.getItemId();
 		int rowItemSelected = info.position;
 		switch (menuItemID) {
@@ -117,8 +122,10 @@ public class NoteListFragment extends ListFragment {
 				launchNoteDetailActivity(rowItemSelected, MainActivity.EDIT_NOTE_MOTIVE);
 				return true;
 			case R.id.delete:
-				notes.remove(rowItemSelected);
+				Note deleted = notes.get(rowItemSelected);
+				notes.remove(deleted);
 				noteAdapter.notifyDataSetChanged();
+				DataBaseController.getInstance().deleteNote(deleted);
 				return true;
 		}
 		return super.onContextItemSelected(item);
@@ -130,13 +137,14 @@ public class NoteListFragment extends ListFragment {
 		Note note = (Note) getListAdapter().getItem(position);
 		String title = note.getTitle();
 		String body = note.getBody();
-
+		String date = note.getDate();
 
 		Note.Category category = note.getCategory();
 
 		intent.putExtra(MainActivity.NOTE_TITLE_KEY, title);
 		intent.putExtra(MainActivity.NOTE_BODY_KEY, body);
 		intent.putExtra(MainActivity.NOTE_CATEGORY_KEY, category);
+		intent.putExtra(MainActivity.NOTE_DATE_KEY,date);
 		intent.putExtra(MainActivity.INTENT_MOTIVE, noteDetailMotive);
 		intent.putExtra(MainActivity.NOTE_ID_KEY, position);
 
@@ -144,26 +152,7 @@ public class NoteListFragment extends ListFragment {
 		NoteDataController.initialNoteBody = body;
 		NoteDataController.initialNoteTitle = title;
 		NoteDataController.chosenNoteID = position;
-
+		NoteDataController.initialDate = date;
 		startActivity(intent);
-	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
-
-		Log.d(MainActivity.APP_ID_KEY,"on pause----------"+(notes==null));
-		Log.d(MainActivity.APP_ID_KEY,notes.size()+"Writing notes size  -------------On PAUSE" );
-		NoteDataController.setReadNotesOnTerminate(notes);
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-
-		Log.d(MainActivity.APP_ID_KEY,"DESTRYIN----------"+(notes==null));
-		Log.d(MainActivity.APP_ID_KEY,notes.size()+"Writing notes size" );
-		NoteDataController.setReadNotesOnTerminate(notes);
-
 	}
 }

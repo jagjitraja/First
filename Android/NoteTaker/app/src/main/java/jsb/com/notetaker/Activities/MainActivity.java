@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import jsb.com.notetaker.AdaptersAndDataFiles.Note;
 import jsb.com.notetaker.R;
 
@@ -17,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 	public final static String LAUNCH_NOTE_DETAIL = "LAUNCH_NOTE_DETAIL_ACTIVITY";
 	public final static String NOTE_TITLE_KEY = "NOTE TITLE";
 	public final static String NOTE_BODY_KEY = "NOTE BODY";
+	public final static String NOTE_DATE_KEY = "NOTE DATE";
 	public final static String NOTE_CATEGORY_KEY = "NOTE CATEGORY";
 	public final static String NOTE_ID_KEY = "NOTE ID KEY";
 	public final static String CHANGES_MADE = "CHANGES MADE";

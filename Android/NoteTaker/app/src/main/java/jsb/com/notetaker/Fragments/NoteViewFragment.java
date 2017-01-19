@@ -24,11 +24,13 @@ public class NoteViewFragment extends Fragment {
 	private String noteTitle ;
 	private String noteBody;
 	private Note.Category category;
+	private String noteDate;
 
 	public NoteViewFragment() {
 		// Required empty public constructor
 	}
 
+	//TODO - menu items multiply whenever device orientation changes
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
@@ -49,6 +51,7 @@ public class NoteViewFragment extends Fragment {
 				break;
 
 			case R.id.delete:
+				//TODO: Create a delete confirmation dialogue
 				Log.d(MainActivity.APP_ID_KEY,"DELETE SELETED");
 				Intent intent = new Intent(getActivity(), MainActivity.class);
 				intent.putExtra(MainActivity.NOTE_TITLE_KEY, noteTitle);
@@ -70,8 +73,6 @@ public class NoteViewFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		super.onCreate(savedInstanceState);
-
 		setHasOptionsMenu(true);
 		setMenuVisibility(true);
 
@@ -81,13 +82,21 @@ public class NoteViewFragment extends Fragment {
 		TextView body = (TextView) fragmentLayout.findViewById(R.id.note_body_view);
 		TextView title = (TextView) fragmentLayout.findViewById(R.id.note_title_view);
 		ImageView icon = (ImageView) fragmentLayout.findViewById(R.id.note_item_icon);
+		TextView date = (TextView) fragmentLayout.findViewById(R.id.date_Note_view);
+		TextView dateLabel = (TextView)fragmentLayout.findViewById(R.id.date_label_Note_view);
+		dateLabel.setTypeface(NoteDataController.getDateFont());
+		body.setTypeface(NoteDataController.getBodyFont());
+		title.setTypeface(NoteDataController.getTitleFont());
+		date.setTypeface(NoteDataController.getDateFont());
 
 		 noteTitle = intent.getExtras().getString(MainActivity.NOTE_TITLE_KEY);
 		 noteBody = intent.getExtras().getString(MainActivity.NOTE_BODY_KEY);
 		 category = (Note.Category) intent.getSerializableExtra(MainActivity.NOTE_CATEGORY_KEY);
+		 noteDate = intent.getStringExtra(MainActivity.NOTE_DATE_KEY);
 
 		title.setText(noteTitle);
 		body.setText(noteBody);
+		date.setText(noteDate);
 		icon.setImageResource(Note.getCategoryImageFromCategory(category));
 
 		return fragmentLayout;

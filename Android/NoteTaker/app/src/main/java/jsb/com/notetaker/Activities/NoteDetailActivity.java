@@ -72,16 +72,6 @@ public class NoteDetailActivity extends AppCompatActivity {
 	}
 
 
-	/*@Override //get data from fragment
-	public void passNoteData(String newTitle, String newBody, Note.Category newCategory){
-		Log.d(MainActivity.APP_ID_KEY,"RECEIVED NEW DATA FROM FRAGMENT");
-		this.newNoteBody = newBody;
-		this.newNoteCategory = newCategory;
-		this.newNoteTitle = newTitle;
-		Log.d(MainActivity.APP_ID_KEY, newNoteTitle);
-		Log.d(MainActivity.APP_ID_KEY, newNoteBody);
-		Log.d(MainActivity.APP_ID_KEY, newNoteCategory.toString());
-	}*/
 
 	private boolean checkChanges() {
 
@@ -121,8 +111,4 @@ public class NoteDetailActivity extends AppCompatActivity {
 		}
 	}
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-	}
 }
