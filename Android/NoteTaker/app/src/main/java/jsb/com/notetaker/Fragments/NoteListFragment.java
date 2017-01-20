@@ -46,7 +46,6 @@ public class NoteListFragment extends ListFragment {
 		else if (notes == null) {
 			Log.d(MainActivity.APP_ID_KEY, "THE ARRAY LIST IS NULL");
 			notes = NoteDataController.getReadNotes();
-
 		}
 		Intent intent = getActivity().getIntent();
 
@@ -83,14 +82,12 @@ public class NoteListFragment extends ListFragment {
 			} else {
 				Note newNote = new Note(title, body, category,notes.size()+1);
 				DataBaseController.getInstance().write_Note(newNote);
-
 				//TODO - Temporary because it wont be written to database.
 				//Just for purpose while app is running therefore database wont be frequently opened
 				notes.add(newNote);
 			}
 		}
 		else{
-			Log.d(MainActivity.APP_ID_KEY,"IN DELETING PART");
 			Note deleted = notes.get(position);
 			DataBaseController.getInstance().deleteNote(deleted);
 			notes.remove(deleted);

@@ -39,19 +39,7 @@ public class NoteEditFragment extends Fragment {
 	private Button saveButton;
 	private TextView editDate;
 
-	/*private UpdateNoteData updateNoteData;
 
-	//Interface used to transfer note data from fragment to notedetailactivity on destroy
-	//Interface used to transfer note data from fragment to notedetailactivity on destroy
-	public interface UpdateNoteData{
-		public void passNoteData(String newTitle, String newBody, Note.Category newCategory);
-	}
-
-	@Override
-	public void onAttach(Context context) {
-		super.onAttach(context);
-		updateNoteData = (UpdateNoteData)context;
-	}*/
 
 	public NoteEditFragment() {
 		// Required empty public constructor
@@ -63,15 +51,15 @@ public class NoteEditFragment extends Fragment {
 		editTitle = (EditText) fragmentLayout.findViewById(R.id.edit_note_title_view);
 		editDate = (TextView)fragmentLayout.findViewById(R.id.edit_note_date);
 		TextView dateLabel = (TextView)fragmentLayout.findViewById(R.id.date_label_Note_edit_view);
+		saveButton = (Button) fragmentLayout.findViewById(R.id.save_button);
 
 		editTitle.setTypeface(NoteDataController.getTitleFont());
 		editDate.setTypeface(NoteDataController.getDateFont());
 		editBody.setTypeface(NoteDataController.getBodyFont());
 		dateLabel.setTypeface(NoteDataController.getDateFont());
-
+		saveButton.setTypeface(NoteDataController.getTitleFont());
 		//limit title length to 15 characters
 		editTitle.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
-		saveButton = (Button) fragmentLayout.findViewById(R.id.save_button);
 	}
 
 
@@ -94,7 +82,6 @@ public class NoteEditFragment extends Fragment {
 				saveConfirmDialogue.show();
 				NoteDetailActivity.isSaveDialogueShowing = true;
 			}
-
 			if (savedInstanceState.getBoolean(MainActivity.CHOICE_DIALOGUE_IS_SHOWING)) {
 				launchChooseCategoryDialogueBuilder();
 				chooseCategoryDialogue.show();
@@ -119,6 +106,9 @@ public class NoteEditFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
+
+		setHasOptionsMenu(false);
+		setMenuVisibility(false);
 
 		final View fragmentLayout = inflater.inflate(R.layout.fragment_note_edit, container, false);
 		getUIElements(fragmentLayout);

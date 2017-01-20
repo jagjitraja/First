@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
 		switch (id) {
 			case R.id.action_settings:
 				return true;
-
 			case R.id.add_note_button:
 				Intent intent = new Intent(this, NoteDetailActivity.class);
 				intent.putExtra(INTENT_MOTIVE, "3");

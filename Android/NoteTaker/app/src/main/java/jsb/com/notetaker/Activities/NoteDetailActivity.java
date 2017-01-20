@@ -71,18 +71,7 @@ public class NoteDetailActivity extends AppCompatActivity {
 		fragmentTransaction.commit();
 	}
 
-
-
 	private boolean checkChanges() {
-
-		Log.d(MainActivity.APP_ID_KEY, newNoteTitle);
-		Log.d(MainActivity.APP_ID_KEY, newNoteBody);
-		Log.d(MainActivity.APP_ID_KEY, newNoteCategory.toString());
-
-		Log.d(MainActivity.APP_ID_KEY, NoteDataController.initialNoteTitle);
-		Log.d(MainActivity.APP_ID_KEY, NoteDataController.initialNoteBody);
-		Log.d(MainActivity.APP_ID_KEY, NoteDataController.initialCategory.toString());
-
 		//check changes between initial note data and current note data
 		return !(newNoteTitle.equals(NoteDataController.initialNoteTitle) &&
 				newNoteBody.equals(NoteDataController.initialNoteBody) &&
@@ -91,7 +80,6 @@ public class NoteDetailActivity extends AppCompatActivity {
 
 	@Override
 	public void onBackPressed() {
-
 		noteEditFragment = (NoteEditFragment) fragmentManager.findFragmentByTag("NOTE_EDIT_FRAGMENT");
 
 		if (noteEditFragment != null) {
@@ -110,5 +98,7 @@ public class NoteDetailActivity extends AppCompatActivity {
 			super.onBackPressed();
 		}
 	}
+
+	//TODO CREATE A METHOD TO GO BACK TO MAIN ACTIVITY
 
 }

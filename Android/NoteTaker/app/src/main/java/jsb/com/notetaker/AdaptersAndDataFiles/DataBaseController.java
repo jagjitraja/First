@@ -4,11 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
-
-import jsb.com.notetaker.Activities.MainActivity;
 
 /**
  * Created by Jagjit Singh on 1/17/2017.
@@ -35,22 +32,19 @@ public class DataBaseController {
 		ContentValues values = new ContentValues();
 		SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
 
-		values.put(NoteDataBaseContract.TableContracts._ID,note.getID());
 		values.put(NoteDataBaseContract.TableContracts.COLUMN_TITLE,note.getTitle());
 		values.put(NoteDataBaseContract.TableContracts.COLUMN_DATE,note.getDate());
 		values.put(NoteDataBaseContract.TableContracts.COLUMN_BODY,note.getBody());
 		values.put(NoteDataBaseContract.TableContracts.COLUMN_CATEGORY,note.getCategory()+"");
 
 		long id = database.insertOrThrow(NoteDataBaseContract.TableContracts.TABLE_NAME,null,values);
-
-		Log.d(MainActivity.APP_ID_KEY,id+"=====================================");
+		note.setID((int)id);
 		database.close();
 		dataBaseHelper.close();
 
 	}
 
 	public ArrayList<Note> read_data(){
-
 
 		SQLiteDatabase database = dataBaseHelper.getReadableDatabase();
 		ArrayList<Note> notes = new ArrayList<>();
@@ -81,9 +75,10 @@ public class DataBaseController {
 			body = cursor.getString(cursor.getColumnIndexOrThrow(NoteDataBaseContract.TableContracts.COLUMN_BODY));
 			date = cursor.getString(cursor.getColumnIndexOrThrow(NoteDataBaseContract.TableContracts.COLUMN_DATE));
 			category = cursor.getString(cursor.getColumnIndexOrThrow(NoteDataBaseContract.TableContracts.COLUMN_CATEGORY));
+			i = cursor.getInt(cursor.getColumnIndexOrThrow(NoteDataBaseContract.TableContracts._ID));
 			notes.add(new Note(title,body,date,Note.getCategoryFromString(category),i));
-			i++;
 		}
+
 		cursor.close();
 		database.close();
 		dataBaseHelper.close();
@@ -98,7 +93,6 @@ public class DataBaseController {
 
 		database.close();
 		dataBaseHelper.close();
-		Log.d(MainActivity.APP_ID_KEY,note.getID()+"-------------"+x);
 	}
 
 	public void updateNote(Note note){
@@ -116,9 +110,6 @@ public class DataBaseController {
 		contentValues.clear();
 		database.close();
 		dataBaseHelper.close();
-
-
-		Log.d(MainActivity.APP_ID_KEY,"UPDATED");
 	}
 
 

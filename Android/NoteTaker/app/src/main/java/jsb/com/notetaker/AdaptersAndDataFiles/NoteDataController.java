@@ -27,9 +27,8 @@ public class NoteDataController extends Application {
 	private NoteDataBaseHelper noteDataBaseHelper;
 
 	public NoteDataController(){
+
 	}
-
-
 
 	public static ArrayList getReadNotes() {
 		if (readNotes == null) {
@@ -46,9 +45,6 @@ public class NoteDataController extends Application {
 		dataBaseController.initializeDatabase(context);
 		readNotes = dataBaseController.read_data();
 	}
-
-
-
 
 	public static Typeface getTitleFont(){
 		Typeface titleFont = Typeface.createFromAsset(context.getAssets(),"fonts/Kalam-Bold.ttf");

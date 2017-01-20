@@ -16,14 +16,14 @@ public class NoteDataBaseContract {
 		public static final String TABLE_NAME="notes_table";
 
 		//TABLE COLUMN NAMES
-		public static final String COLUMN_CATEGORY = "category_column";
-		public static final String COLUMN_TITLE = "title_column";
-		public static final String COLUMN_BODY = "body_column";
-		public static final String COLUMN_DATE = "date_column";
+		public static final String COLUMN_CATEGORY = "Category";
+		public static final String COLUMN_TITLE = "Title";
+		public static final String COLUMN_BODY = "Body";
+		public static final String COLUMN_DATE = "Date";
 
 		public static final String SQL_CREATE_ENTRIES =
 				"CREATE TABLE " + TableContracts.TABLE_NAME + " (" +
-						TableContracts._ID + " INTEGER KEY," +
+						TableContracts._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
 						TableContracts.COLUMN_CATEGORY + " CATEGORY," +
 						TableContracts.COLUMN_TITLE + " TITLE,"+
 						TableContracts.COLUMN_BODY+" BODY,"+

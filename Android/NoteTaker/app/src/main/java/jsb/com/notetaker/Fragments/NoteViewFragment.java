@@ -33,7 +33,7 @@ public class NoteViewFragment extends Fragment {
 	//TODO - menu items multiply whenever device orientation changes
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
+		menu.clear();
 		inflater.inflate(R.menu.long_press_context_menu,menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
@@ -57,10 +57,11 @@ public class NoteViewFragment extends Fragment {
 				intent.putExtra(MainActivity.NOTE_TITLE_KEY, noteTitle);
 				intent.putExtra(MainActivity.NOTE_BODY_KEY, noteBody);
 				intent.putExtra(MainActivity.NOTE_CATEGORY_KEY, category);
+				intent.putExtra(MainActivity.NOTE_DATE_KEY,noteDate);
 				intent.putExtra(MainActivity.CHANGES_MADE, true);
 				intent.putExtra(MainActivity.DELETE_CALL,true);
 				intent.putExtra(MainActivity.NOTE_ID_KEY, NoteDataController.chosenNoteID);
-				//clears back stack so that main activity does not relaunch on back pressed
+				//clears back stack so that notedetail activity does not relaunch on back pressed
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				getActivity().finish();
 				startActivity(intent);
@@ -84,15 +85,16 @@ public class NoteViewFragment extends Fragment {
 		ImageView icon = (ImageView) fragmentLayout.findViewById(R.id.note_item_icon);
 		TextView date = (TextView) fragmentLayout.findViewById(R.id.date_Note_view);
 		TextView dateLabel = (TextView)fragmentLayout.findViewById(R.id.date_label_Note_view);
+
 		dateLabel.setTypeface(NoteDataController.getDateFont());
 		body.setTypeface(NoteDataController.getBodyFont());
 		title.setTypeface(NoteDataController.getTitleFont());
 		date.setTypeface(NoteDataController.getDateFont());
 
-		 noteTitle = intent.getExtras().getString(MainActivity.NOTE_TITLE_KEY);
-		 noteBody = intent.getExtras().getString(MainActivity.NOTE_BODY_KEY);
-		 category = (Note.Category) intent.getSerializableExtra(MainActivity.NOTE_CATEGORY_KEY);
-		 noteDate = intent.getStringExtra(MainActivity.NOTE_DATE_KEY);
+		noteTitle = intent.getExtras().getString(MainActivity.NOTE_TITLE_KEY);
+		noteBody = intent.getExtras().getString(MainActivity.NOTE_BODY_KEY);
+		category = (Note.Category) intent.getSerializableExtra(MainActivity.NOTE_CATEGORY_KEY);
+		noteDate = intent.getStringExtra(MainActivity.NOTE_DATE_KEY);
 
 		title.setText(noteTitle);
 		body.setText(noteBody);
@@ -101,6 +103,9 @@ public class NoteViewFragment extends Fragment {
 
 		return fragmentLayout;
 	}
+
+
+
 }
 
 
