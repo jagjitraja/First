@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.util.Log;
@@ -54,14 +56,25 @@ public class NoteEditFragment extends Fragment {
 		saveButton = (Button) fragmentLayout.findViewById(R.id.save_button);
 
 		editTitle.setTypeface(NoteDataController.getTitleFont());
-		editDate.setTypeface(NoteDataController.getDateFont());
+		editDate.setTypeface(NoteDataController.getTitleFont());
 		editBody.setTypeface(NoteDataController.getBodyFont());
 		dateLabel.setTypeface(NoteDataController.getDateFont());
 		saveButton.setTypeface(NoteDataController.getTitleFont());
+
 		//limit title length to 15 characters
 		editTitle.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
-	}
+		editDate.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				TimePickerDialogue timePickerDialogue = new TimePickerDialogue();
+				FragmentManager fragmentManager = getFragmentManager();
+				FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+				timePickerDialogue.show(fragmentTransaction,"TIME-PICKER");
+				editDate.setText(timePickerDialogue.getDate().toString().substring(0,16));
+			}
+		});
 
+	}
 
 	private void fillNoteData(Intent intent, Bundle savedInstanceState) {
 		String title = intent.getExtras().getString(MainActivity.NOTE_TITLE_KEY);
@@ -101,7 +114,6 @@ public class NoteEditFragment extends Fragment {
 		NoteDataController.initialNoteTitle = title;
 		NoteDataController.chosenNoteID = id;
 	}
-
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -209,7 +221,6 @@ public class NoteEditFragment extends Fragment {
 		saveConfirmDialogue = saveConfirmDialogueBuilder.create();
 	}
 
-
 	@Override
 	public void onSaveInstanceState(Bundle saveInstanceState) {
 		saveInstanceState.putSerializable(MainActivity.NOTE_CATEGORY_KEY, chosenCategory);
@@ -240,7 +251,6 @@ public class NoteEditFragment extends Fragment {
 	public Note.Category getnewNoteCategory() {
 		return chosenCategory;
 	}
-
 
 	@Override
 	public void onDestroy() {
