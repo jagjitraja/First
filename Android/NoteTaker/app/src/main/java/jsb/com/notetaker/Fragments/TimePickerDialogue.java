@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -42,9 +43,10 @@ public class TimePickerDialogue extends DialogFragment {
 		button = (Button)fragmentLayout.findViewById(R.id.changeButton);
 		datePicker.setMinDate(System.currentTimeMillis()-1000);
 
-
-		//TODO Figure out the code to make sure that time picker cant set time less than current time
-		//TODO HANDLE THE YEAR
+		//Set Max time to end of current year
+		Calendar currentCalender = Calendar.getInstance();
+		Calendar nextCalender  = new GregorianCalendar(currentCalender.get(Calendar.YEAR),currentCalender.DECEMBER,31);
+		datePicker.setMaxDate(nextCalender.getTimeInMillis());
 
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -53,7 +55,6 @@ public class TimePickerDialogue extends DialogFragment {
 				datePicker.setVisibility(View.INVISIBLE);
 				timePicker.setVisibility(View.VISIBLE);
 				setDate(datePicker.getYear(),datePicker.getMonth(),datePicker.getDayOfMonth());
-
 				timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
 					@RequiresApi(api = Build.VERSION_CODES.M)
 					@Override

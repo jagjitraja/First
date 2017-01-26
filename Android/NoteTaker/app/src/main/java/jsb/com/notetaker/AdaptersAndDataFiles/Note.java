@@ -1,6 +1,7 @@
 package jsb.com.notetaker.AdaptersAndDataFiles;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import jsb.com.notetaker.R;
@@ -88,7 +89,9 @@ public class Note implements Serializable {
 	public String getDate() {
 		Date regularDate = new Date();
 		regularDate.setTime(date);
-		String dateString = regularDate.toString().substring(0, 16);
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM, hh:mm a");
+		String dateString = dateFormat.format(regularDate);
 		if (stringDate == null) {
 			stringDate = dateString;
 		}

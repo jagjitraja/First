@@ -55,25 +55,14 @@ public class NoteEditFragment extends Fragment {
 		TextView dateLabel = (TextView)fragmentLayout.findViewById(R.id.date_label_Note_edit_view);
 		saveButton = (Button) fragmentLayout.findViewById(R.id.save_button);
 
+		//set typeface fonts for all text elements
 		editTitle.setTypeface(NoteDataController.getTitleFont());
 		editDate.setTypeface(NoteDataController.getTitleFont());
 		editBody.setTypeface(NoteDataController.getBodyFont());
 		dateLabel.setTypeface(NoteDataController.getDateFont());
 		saveButton.setTypeface(NoteDataController.getTitleFont());
-
 		//limit title length to 15 characters
 		editTitle.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
-		editDate.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				TimePickerDialogue timePickerDialogue = new TimePickerDialogue();
-				FragmentManager fragmentManager = getFragmentManager();
-				FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-				timePickerDialogue.show(fragmentTransaction,"TIME-PICKER");
-				editDate.setText(timePickerDialogue.getDate().toString().substring(0,16));
-			}
-		});
-
 	}
 
 	private void fillNoteData(Intent intent, Bundle savedInstanceState) {
@@ -82,7 +71,6 @@ public class NoteEditFragment extends Fragment {
 		String date = intent.getStringExtra(MainActivity.NOTE_DATE_KEY);
 
 		Note.Category category;
-
 		if (savedInstanceState == null) {
 			category = (Note.Category) intent.getExtras().getSerializable(MainActivity.NOTE_CATEGORY_KEY);
 			chosenCategory = category;
@@ -105,6 +93,18 @@ public class NoteEditFragment extends Fragment {
 		editTitle.setText(title);
 		editBody.setText(body);
 		editDate.setText(date);
+
+		editDate.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				TimePickerDialogue timePickerDialogue = new TimePickerDialogue();
+				FragmentManager fragmentManager = getFragmentManager();
+				FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+				timePickerDialogue.show(fragmentTransaction,"TIME-PICKER");
+				editDate.setText(timePickerDialogue.getDate().toString().substring(0,16));
+			}
+		});
+
 		holdInitialNoteData(title, body, category, intent.getIntExtra(MainActivity.NOTE_ID_KEY, 0));
 	}
 
