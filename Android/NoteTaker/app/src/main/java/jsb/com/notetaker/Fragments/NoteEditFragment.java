@@ -20,6 +20,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import jsb.com.notetaker.Activities.MainActivity;
 import jsb.com.notetaker.Activities.NoteDetailActivity;
 import jsb.com.notetaker.AdaptersAndDataFiles.Note;
@@ -41,7 +43,9 @@ public class NoteEditFragment extends Fragment {
 	private Button saveButton;
 	private TextView editDate;
 
-
+    private TimePickerDialogue timePickerDialogue;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
 
 	public NoteEditFragment() {
 		// Required empty public constructor
@@ -66,7 +70,8 @@ public class NoteEditFragment extends Fragment {
 	}
 
 	private void fillNoteData(Intent intent, Bundle savedInstanceState) {
-		String title = intent.getExtras().getString(MainActivity.NOTE_TITLE_KEY);
+
+        String title = intent.getExtras().getString(MainActivity.NOTE_TITLE_KEY);
 		String body = intent.getExtras().getString(MainActivity.NOTE_BODY_KEY);
 		String date = intent.getStringExtra(MainActivity.NOTE_DATE_KEY);
 
@@ -97,11 +102,7 @@ public class NoteEditFragment extends Fragment {
 		editDate.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				TimePickerDialogue timePickerDialogue = new TimePickerDialogue();
-				FragmentManager fragmentManager = getFragmentManager();
-				FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-				timePickerDialogue.show(fragmentTransaction,"TIME-PICKER");
-				editDate.setText(timePickerDialogue.getDate().toString().substring(0,16));
+				launchTimePickerDialogue();
 			}
 		});
 
@@ -114,6 +115,19 @@ public class NoteEditFragment extends Fragment {
 		NoteDataController.initialNoteTitle = title;
 		NoteDataController.chosenNoteID = id;
 	}
+
+	private void launchTimePickerDialogue(){
+        timePickerDialogue = new TimePickerDialogue();
+        timePickerDialogue.setTargetFragment(this,0);
+        fragmentManager = getFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        timePickerDialogue.show(fragmentTransaction,"TIME-PICKER");
+    }
+
+    public void setTimeFromTimePicker(String date){
+        editDate.setText(date);
+    }
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -252,10 +266,5 @@ public class NoteEditFragment extends Fragment {
 		return chosenCategory;
 	}
 
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
 
-		Log.d(MainActivity.APP_ID_KEY, "DESTROYED FRAGMENT=========================");
-	}
 }

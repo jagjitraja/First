@@ -43,7 +43,6 @@ import javax.net.ssl.HttpsURLConnection;
  */
 public class MainActivityFragment extends Fragment {
 
-    private ArrayList arrayList;
     ArrayAdapter arrayAdapter;
     public MainActivityFragment() {
     }
@@ -60,7 +59,7 @@ public class MainActivityFragment extends Fragment {
         switch (id){
             case R.id.refresh:
                 FetchWeatherTask fetchWeatherTask = new FetchWeatherTask();
-                arrayList = (ArrayList) Arrays.asList(fetchWeatherTask.execute("43434"));
+                fetchWeatherTask.execute("43434");
                 arrayAdapter.notifyDataSetChanged();
                 return true;
         }
@@ -73,7 +72,7 @@ public class MainActivityFragment extends Fragment {
         View listFragment = inflater.inflate(R.layout.fragment_main, container, false);
 
         setHasOptionsMenu(true);
-        arrayList = new ArrayList();
+        ArrayList arrayList = new ArrayList();
 
         arrayAdapter = new ArrayAdapter(getContext(),R.layout.list_item,arrayList);
 
@@ -111,6 +110,7 @@ public class MainActivityFragment extends Fragment {
                 final String COUNT_PARAM = "cnt";
                 final String UNIT_PARAM = "units";
                 final String POSTAL_CODE_PARAM = "q";
+
 
                 Uri uri = Uri.parse(BASE_URL).buildUpon()
                         .appendQueryParameter(POSTAL_CODE_PARAM,params[0])
@@ -224,8 +224,7 @@ public class MainActivityFragment extends Fragment {
             JSONObject forecastJson = new JSONObject(forecastJsonStr);
             JSONArray weatherArray = forecastJson.getJSONArray(OWM_LIST);
 
-            Calendar date = new GregorianCalendar();
-
+            Calendar date = Calendar.getInstance();
 
             String[] resultStrs = new String[numDays];
             for(int i = 0; i < weatherArray.length(); i++) {
@@ -236,13 +235,8 @@ public class MainActivityFragment extends Fragment {
 
                 // Get the JSON object representing the day
                 JSONObject dayForecast = weatherArray.getJSONObject(i);
-
-                // The date/time is returned as a long.  We need to convert that
-                // into something human-readable, since most people won't read "1400356800" as
-                // "this saturday".
                 date.add(Calendar.DATE,i);
-
-                day = date.toString();
+                day = getReadableDateString(date.getTimeInMillis());
 
                 // description is in a child array called "weather", which is 1 element long.
                 JSONObject weatherObject = dayForecast.getJSONArray(OWM_WEATHER).getJSONObject(0);

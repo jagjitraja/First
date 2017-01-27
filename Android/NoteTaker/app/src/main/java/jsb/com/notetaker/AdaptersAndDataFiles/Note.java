@@ -1,6 +1,8 @@
 package jsb.com.notetaker.AdaptersAndDataFiles;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -18,6 +20,7 @@ public class Note implements Serializable {
 	private long date;
 	private Category category;
 	private String stringDate;
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, d MMM, hh:mm a");
 
 	public Note(String title, String body, String date, Category category,int id) {
 		this.body = body;
@@ -90,8 +93,7 @@ public class Note implements Serializable {
 		Date regularDate = new Date();
 		regularDate.setTime(date);
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM, hh:mm a");
-		String dateString = dateFormat.format(regularDate);
+		String dateString = simpleDateFormat.format(regularDate);
 		if (stringDate == null) {
 			stringDate = dateString;
 		}
@@ -143,4 +145,16 @@ public class Note implements Serializable {
 	}
 
 	public enum Category {PRIVATE, WORK, FINANCIAL, STUDIES, MEALS}
+
+	public Date getDateFromString(String stringDate){
+
+		Date date = new Date();
+		try {
+			date = simpleDateFormat.parse(stringDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return date;
+	}
+
 }

@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 	public final static String SAVE_DIALOGUE_IS_SHOWING = "SAVE_DIALOGUE IS DISPLAYED ON SCREEN";
 	public final static String CHOICE_DIALOGUE_IS_SHOWING = "CHOICE DIALOGUE IS DISPLAYED ON SCREEN";
 
+//TODO when app comes form background to launch on activity it was on
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

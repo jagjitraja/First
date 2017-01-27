@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -19,7 +20,7 @@ import jsb.com.notetaker.R;
 
 public class TimePickerDialogue extends DialogFragment {
 
-	private Date date;
+	private Date dateToLaunch;
 	private DatePicker datePicker;
 	private TimePicker timePicker;
 	private Button button;
@@ -33,6 +34,7 @@ public class TimePickerDialogue extends DialogFragment {
 		// Required empty public constructor
 
 	}
+    //TODO - Laucnh date picker on date in edit fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
@@ -81,14 +83,22 @@ public class TimePickerDialogue extends DialogFragment {
 		this.minute = minute;
 	}
 
-	private void setDate(int year, int month,int day){
-		this.day = day;
-		this.year = year;
-		this.month = month;
-	}
+	private void setDate(int year, int month,int day) {
+        this.day = day;
+        this.year = year;
+        this.month = month;
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
-	public Date getDate(){
-		return new GregorianCalendar(year,month,day,hour,minute).getTime();
-	}
+        NoteEditFragment editFragment = (NoteEditFragment) getTargetFragment();
+
+        if(editFragment!=null){
+            Calendar calendar = new GregorianCalendar(year,month,day,hour,minute);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM, hh:mm a");
+            editFragment.setTimeFromTimePicker(dateFormat.format(calendar.getTime()));
+        }
+    }
 }
