@@ -18,10 +18,12 @@
 	<string name="due_date">Date</string>
 	<string name="due">Due:</string>
 	<string name="textview">TextView</string>
-
-	<!-- TODO: Remove or change this placeholder text -->
-	<string name="hello_blank_fragment">Hello blank fragment</string>
 	<string name="next">Next</string>
+	<string name="NOTE_EDIT_FRAGMENT">NOTE_EDIT_FRAGMENT</string>
+	<string name="NOTE_VIEW_FRAGMENT">NOTE_VIEW_FRAGMENT</string>
+	<string name="View_Note_Title">View Note</string>
+	<string name="Edit_Note_Title">Edit Note</string>
+	<string name="Add_Note_Title">Add New Note</string>
 
 
 </resources>

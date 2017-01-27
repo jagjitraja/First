@@ -17,10 +17,14 @@ import android.widget.TextView;
 import jsb.com.notetaker.Activities.MainActivity;
 import jsb.com.notetaker.Activities.NoteDetailActivity;
 import jsb.com.notetaker.AdaptersAndDataFiles.Note;
+import jsb.com.notetaker.AdaptersAndDataFiles.NoteAdapter;
 import jsb.com.notetaker.AdaptersAndDataFiles.NoteDataController;
 import jsb.com.notetaker.R;
 
 public class NoteViewFragment extends Fragment {
+
+
+    public final String NOTE_VIEW_FRAGMENT = NoteViewFragment.class.getSimpleName();
 
 	private String noteTitle ;
 	private String noteBody;
@@ -46,8 +50,6 @@ public class NoteViewFragment extends Fragment {
 
 		switch (itemPosition){
 			case R.id.edit:
-				NoteDetailActivity.getActionBarNoteDetail().setTitle("Edit Note");
-                NoteDetailActivity.getActionBarNoteDetail().setDisplayHomeAsUpEnabled(false);
 				FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 				fragmentTransaction.replace(R.id.detail_container,new NoteEditFragment(),"NOTE_EDIT_FRAGMENT");
 				fragmentTransaction.commit();
@@ -105,7 +107,6 @@ public class NoteViewFragment extends Fragment {
 
 		return fragmentLayout;
 	}
-
 
 
 }

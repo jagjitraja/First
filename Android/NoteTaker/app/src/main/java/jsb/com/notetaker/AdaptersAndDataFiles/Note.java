@@ -18,6 +18,8 @@ import jsb.com.notetaker.R;
 
 public class Note implements Serializable {
 
+    public final String NOTE_CLASS = Note.class.getSimpleName();
+
 	private int ID;
 	private String title;
 	private String body;

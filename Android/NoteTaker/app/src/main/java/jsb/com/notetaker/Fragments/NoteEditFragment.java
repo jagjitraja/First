@@ -26,6 +26,7 @@ import java.util.Date;
 import jsb.com.notetaker.Activities.MainActivity;
 import jsb.com.notetaker.Activities.NoteDetailActivity;
 import jsb.com.notetaker.AdaptersAndDataFiles.Note;
+import jsb.com.notetaker.AdaptersAndDataFiles.NoteAdapter;
 import jsb.com.notetaker.AdaptersAndDataFiles.NoteDataController;
 import jsb.com.notetaker.R;
 
@@ -34,6 +35,9 @@ import jsb.com.notetaker.R;
  * A simple {@link Fragment} subclass.
  */
 public class NoteEditFragment extends Fragment {
+
+
+    public final String NOTE_EDIT_FRAGMENT = NoteEditFragment.class.getSimpleName();
 
 	public AlertDialog saveConfirmDialogue;
 	private ImageButton imageButton;
@@ -223,8 +227,6 @@ public class NoteEditFragment extends Fragment {
 				intent.putExtra(MainActivity.NOTE_BODY_KEY, editBody.getText().toString());
 				intent.putExtra(MainActivity.NOTE_CATEGORY_KEY, chosenCategory);
                 intent.putExtra(MainActivity.NOTE_DATE_KEY,editDate.getText().toString());
-
-                Log.d(MainActivity.APP_ID_KEY,editDate.getText().toString()+"))))))))))))))(((((((((((");
 
 				intent.putExtra(MainActivity.CHANGES_MADE, true);
 				intent.putExtra(MainActivity.NOTE_ID_KEY, NoteDataController.chosenNoteID);

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,7 +22,9 @@ import jsb.com.notetaker.R;
 
 public class TimePickerDialogue extends DialogFragment {
 
-	private Date dateToLaunch;
+
+    public final String TIME_PICKER = TimePickerDialogue.class.getSimpleName();
+
 	private DatePicker datePicker;
 	private TimePicker timePicker;
 	private Button button;

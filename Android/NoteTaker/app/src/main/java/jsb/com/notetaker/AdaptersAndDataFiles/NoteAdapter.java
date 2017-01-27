@@ -24,6 +24,9 @@ import jsb.com.notetaker.R;
 
 public class NoteAdapter extends ArrayAdapter<Note> {
 
+
+	public final String NOTE_ADAPTER = NoteAdapter.class.getSimpleName();
+
 	public NoteAdapter(Context context, ArrayList<Note> notes) {
 		super(context, 0, notes);
 	}

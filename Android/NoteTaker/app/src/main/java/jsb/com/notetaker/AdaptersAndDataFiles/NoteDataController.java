@@ -14,6 +14,9 @@ import java.util.ArrayList;
 
 public class NoteDataController extends Application {
 
+
+	public final String NOTE_DATA_CONTROLLER = NoteDataController.class.getSimpleName();
+
 	private static final String fileName = "data.txt";
 	public static String initialNoteTitle = "";
 	public static String initialNoteBody = "";
