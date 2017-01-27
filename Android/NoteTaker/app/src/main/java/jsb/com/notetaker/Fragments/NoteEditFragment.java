@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import jsb.com.notetaker.Activities.MainActivity;
@@ -71,11 +72,11 @@ public class NoteEditFragment extends Fragment {
 
 	private void fillNoteData(Intent intent, Bundle savedInstanceState) {
 
-        String title = intent.getExtras().getString(MainActivity.NOTE_TITLE_KEY);
-		String body = intent.getExtras().getString(MainActivity.NOTE_BODY_KEY);
-		String date = intent.getStringExtra(MainActivity.NOTE_DATE_KEY);
+        String noteTitle = intent.getExtras().getString(MainActivity.NOTE_TITLE_KEY);
+		String noteBody = intent.getExtras().getString(MainActivity.NOTE_BODY_KEY);
+		String noteDate = intent.getStringExtra(MainActivity.NOTE_DATE_KEY);
+        Note.Category category;
 
-		Note.Category category;
 		if (savedInstanceState == null) {
 			category = (Note.Category) intent.getExtras().getSerializable(MainActivity.NOTE_CATEGORY_KEY);
 			chosenCategory = category;
@@ -95,9 +96,9 @@ public class NoteEditFragment extends Fragment {
 			}
 		}
 		imageButton.setImageResource(Note.getCategoryImageFromCategory(category));
-		editTitle.setText(title);
-		editBody.setText(body);
-		editDate.setText(date);
+		editTitle.setText(noteTitle);
+		editBody.setText(noteBody);
+		editDate.setText(noteDate);
 
 		editDate.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -106,7 +107,7 @@ public class NoteEditFragment extends Fragment {
 			}
 		});
 
-		holdInitialNoteData(title, body, category, intent.getIntExtra(MainActivity.NOTE_ID_KEY, 0));
+		holdInitialNoteData(noteTitle, noteBody, category, intent.getIntExtra(MainActivity.NOTE_ID_KEY, 0));
 	}
 
 	private void holdInitialNoteData(String title, String body, Note.Category category, int id) {
@@ -115,14 +116,6 @@ public class NoteEditFragment extends Fragment {
 		NoteDataController.initialNoteTitle = title;
 		NoteDataController.chosenNoteID = id;
 	}
-
-	private void launchTimePickerDialogue(){
-        timePickerDialogue = new TimePickerDialogue();
-        timePickerDialogue.setTargetFragment(this,0);
-        fragmentManager = getFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        timePickerDialogue.show(fragmentTransaction,"TIME-PICKER");
-    }
 
     public void setTimeFromTimePicker(String date){
         editDate.setText(date);
@@ -164,6 +157,23 @@ public class NoteEditFragment extends Fragment {
 
 		return fragmentLayout;
 	}
+
+
+    private void launchTimePickerDialogue(){
+        timePickerDialogue = new TimePickerDialogue();
+        timePickerDialogue.setTargetFragment(this,0);
+        fragmentManager = getFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        Calendar calendar = Calendar.getInstance();
+        if(editDate.getText().toString()!=null) {
+            calendar.setTime(Note.getDateFromString(editDate.getText().toString()));
+            timePickerDialogue.setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            timePickerDialogue.setTime(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE));
+        }
+        timePickerDialogue.show(fragmentTransaction,"TIME-PICKER");
+
+    }
 
 	//Hide Keyboard method
 	private void hideKeyboard(View fragmentLayout) {
@@ -212,6 +222,10 @@ public class NoteEditFragment extends Fragment {
 				intent.putExtra(MainActivity.NOTE_TITLE_KEY, editTitle.getText().toString());
 				intent.putExtra(MainActivity.NOTE_BODY_KEY, editBody.getText().toString());
 				intent.putExtra(MainActivity.NOTE_CATEGORY_KEY, chosenCategory);
+                intent.putExtra(MainActivity.NOTE_DATE_KEY,editDate.getText().toString());
+
+                Log.d(MainActivity.APP_ID_KEY,editDate.getText().toString()+"))))))))))))))(((((((((((");
+
 				intent.putExtra(MainActivity.CHANGES_MADE, true);
 				intent.putExtra(MainActivity.NOTE_ID_KEY, NoteDataController.chosenNoteID);
 				intent.putExtra(MainActivity.DELETE_CALL,false);
@@ -240,14 +254,12 @@ public class NoteEditFragment extends Fragment {
 		saveInstanceState.putSerializable(MainActivity.NOTE_CATEGORY_KEY, chosenCategory);
 
 		if (NoteDetailActivity.isChoiceDialogueShowing) {
-			Log.d(MainActivity.APP_ID_KEY, "SAVING CHOICE DIALOGUE INSTANCE");
 			chooseCategoryDialogue.dismiss();
 			saveInstanceState.putBoolean(MainActivity.CHOICE_DIALOGUE_IS_SHOWING, NoteDetailActivity.isChoiceDialogueShowing);
 			NoteDetailActivity.isChoiceDialogueShowing = false;
 		}
 
 		if (NoteDetailActivity.isSaveDialogueShowing) {
-			Log.d(MainActivity.APP_ID_KEY, "SAVING SAVE DIALOGUE INSTANCE");
 			saveConfirmDialogue.dismiss();
 			saveInstanceState.putBoolean(MainActivity.SAVE_DIALOGUE_IS_SHOWING, NoteDetailActivity.isSaveDialogueShowing);
 			NoteDetailActivity.isSaveDialogueShowing = false;
@@ -266,5 +278,8 @@ public class NoteEditFragment extends Fragment {
 		return chosenCategory;
 	}
 
+    public String getnewNoteDate() {
+        return editDate.getText().toString();
+    }
 
 }

@@ -1,11 +1,15 @@
 package jsb.com.notetaker.AdaptersAndDataFiles;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
+import jsb.com.notetaker.Activities.MainActivity;
 import jsb.com.notetaker.R;
 
 /**
@@ -17,27 +21,36 @@ public class Note implements Serializable {
 	private int ID;
 	private String title;
 	private String body;
-	private long date;
+	private Calendar date;
 	private Category category;
-	private String stringDate;
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, d MMM, hh:mm a");
+    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, d MMM yy, hh:mm a");
 
 	public Note(String title, String body, String date, Category category,int id) {
 		this.body = body;
 		this.ID = id;
 		this.title = title;
-		this.stringDate = date;
-		this.category = category;
+        this.date = Calendar.getInstance();
+        try {
+            this.date.setTime(simpleDateFormat.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.category = category;
 	}
 
 	public Note(String title, String body, Category category, int i) {
 		this.body = body;
 		this.title = title;
-		this.date = System.currentTimeMillis();
+		this.date = Calendar.getInstance();
+        this.date.setTimeInMillis(System.currentTimeMillis());
 		this.category = category;
 	}
 
-	public int getID(){
+    public static SimpleDateFormat getSimpleDateFormat() {
+        return simpleDateFormat;
+    }
+
+    public int getID(){
 		return this.ID;
 	}
 
@@ -90,19 +103,17 @@ public class Note implements Serializable {
 	}
 
 	public String getDate() {
-		Date regularDate = new Date();
-		regularDate.setTime(date);
-
-		String dateString = simpleDateFormat.format(regularDate);
-		if (stringDate == null) {
-			stringDate = dateString;
-		}
-		return stringDate;
+		String dateString = simpleDateFormat.format(this.date.getTime());
+		return dateString;
 	}
 
-	public void setDate(long date) {
-		this.date = date;
-	}
+	public void setDate(String date) {
+        try {
+            this.date.setTime(simpleDateFormat.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 
 	public String getBody() {
 		return body;
@@ -141,12 +152,12 @@ public class Note implements Serializable {
 	}
 
 	public String toString() {
-		return "Title: " + title + " Body: " + body + " Date: " + stringDate + " Category: " + category;
+		return "Title: " + title + " Body: " + body + " Date: " + getDate() + " Category: " + category;
 	}
 
 	public enum Category {PRIVATE, WORK, FINANCIAL, STUDIES, MEALS}
 
-	public Date getDateFromString(String stringDate){
+	public static Date getDateFromString(String stringDate){
 
 		Date date = new Date();
 		try {

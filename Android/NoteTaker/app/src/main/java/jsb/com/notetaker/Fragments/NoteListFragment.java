@@ -40,11 +40,9 @@ public class NoteListFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 
 		if(savedInstanceState!=null){
-			Log.d(MainActivity.APP_ID_KEY,"SAVED INSTANCE IS NOT NULL");
 			 notes = (ArrayList<Note>) savedInstanceState.getSerializable(MainActivity.SAVE_NOTES);
 		}
 		else if (notes == null) {
-			Log.d(MainActivity.APP_ID_KEY, "THE ARRAY LIST IS NULL");
 			notes = NoteDataController.getReadNotes();
 		}
 		Intent intent = getActivity().getIntent();
@@ -61,7 +59,6 @@ public class NoteListFragment extends ListFragment {
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		Log.d(MainActivity.APP_ID_KEY,"SAVING INSTANCE----------"+(notes==null));
 		outState.putSerializable(MainActivity.SAVE_NOTES,notes);
 	}
 
@@ -69,18 +66,21 @@ public class NoteListFragment extends ListFragment {
 
 		String title = intent.getExtras().getString(MainActivity.NOTE_TITLE_KEY);
 		String body = intent.getExtras().getString(MainActivity.NOTE_BODY_KEY);
+        String date = intent.getStringExtra(MainActivity.NOTE_DATE_KEY);
 		Note.Category category = (Note.Category) intent.getSerializableExtra(MainActivity.NOTE_CATEGORY_KEY);
 		int position = intent.getExtras().getInt(MainActivity.NOTE_ID_KEY);
 
-		if(intent.getExtras().getBoolean(MainActivity.DELETE_CALL)==false) {
+		if(!intent.getExtras().getBoolean(MainActivity.DELETE_CALL)) {
 			if (position != -1) {
 				Note currentNote = (Note) notes.get(position);
 				currentNote.setBody(body);
 				currentNote.setTitle(title);
 				currentNote.setCategory(category);
+                currentNote.setDate(date);
 				DataBaseController.getInstance().updateNote(currentNote);
 			} else {
-				Note newNote = new Note(title, body, category,notes.size()+1);
+                Note newNote;
+                newNote = new Note(title, body,date, category, notes.size() + 1);
 				DataBaseController.getInstance().write_Note(newNote);
 				//TODO - Temporary because it wont be written to database.
 				//Just for purpose while app is running therefore database wont be frequently opened

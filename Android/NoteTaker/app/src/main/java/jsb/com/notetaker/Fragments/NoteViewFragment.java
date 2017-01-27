@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import jsb.com.notetaker.Activities.MainActivity;
+import jsb.com.notetaker.Activities.NoteDetailActivity;
 import jsb.com.notetaker.AdaptersAndDataFiles.Note;
 import jsb.com.notetaker.AdaptersAndDataFiles.NoteDataController;
 import jsb.com.notetaker.R;
@@ -45,6 +46,8 @@ public class NoteViewFragment extends Fragment {
 
 		switch (itemPosition){
 			case R.id.edit:
+				NoteDetailActivity.getActionBarNoteDetail().setTitle("Edit Note");
+                NoteDetailActivity.getActionBarNoteDetail().setDisplayHomeAsUpEnabled(false);
 				FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 				fragmentTransaction.replace(R.id.detail_container,new NoteEditFragment(),"NOTE_EDIT_FRAGMENT");
 				fragmentTransaction.commit();
@@ -52,7 +55,6 @@ public class NoteViewFragment extends Fragment {
 
 			case R.id.delete:
 				//TODO: Create a delete confirmation dialogue
-				Log.d(MainActivity.APP_ID_KEY,"DELETE SELETED");
 				Intent intent = new Intent(getActivity(), MainActivity.class);
 				intent.putExtra(MainActivity.NOTE_TITLE_KEY, noteTitle);
 				intent.putExtra(MainActivity.NOTE_BODY_KEY, noteBody);

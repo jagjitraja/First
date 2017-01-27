@@ -18,13 +18,16 @@ public class NoteDetailActivity extends AppCompatActivity {
 
 	public static boolean isSaveDialogueShowing;
 	public static boolean isChoiceDialogueShowing;
+
 	private FragmentManager fragmentManager;
 	private FragmentTransaction fragmentTransaction;
 	private NoteEditFragment noteEditFragment;
-	private ActionBar actionBar;
+	private static ActionBar actionBar;
+
 	private String newNoteTitle;
 	private String newNoteBody;
 	private Note.Category newNoteCategory;
+	private String newNoteDate;
 
 
 	@Override
@@ -38,6 +41,9 @@ public class NoteDetailActivity extends AppCompatActivity {
 		fragmentTransaction = fragmentManager.beginTransaction();
 		setFragment();
 	}
+    public static ActionBar getActionBarNoteDetail(){
+       return actionBar;
+    }
 
 	private void setFragment() {
 		Intent intent = getIntent();
@@ -75,7 +81,8 @@ public class NoteDetailActivity extends AppCompatActivity {
 		//check changes between initial note data and current note data
 		return !(newNoteTitle.equals(NoteDataController.initialNoteTitle) &&
 				newNoteBody.equals(NoteDataController.initialNoteBody) &&
-				newNoteCategory.equals(NoteDataController.initialCategory));
+				newNoteCategory.equals(NoteDataController.initialCategory)&&
+				newNoteDate.equals(NoteDataController.initialDate));
 	}
 
 	@Override
@@ -86,6 +93,8 @@ public class NoteDetailActivity extends AppCompatActivity {
 			newNoteTitle = noteEditFragment.getnewNoteTitle();
 			newNoteBody = noteEditFragment.getnewNoteBody();
 			newNoteCategory = noteEditFragment.getnewNoteCategory();
+			newNoteDate = noteEditFragment.getnewNoteDate();
+
 			if (checkChanges()) {
 				Log.d(MainActivity.APP_ID_KEY, "Changes were made");
 				noteEditFragment.launchSaveConfirmationDialogue();
@@ -99,6 +108,6 @@ public class NoteDetailActivity extends AppCompatActivity {
 		}
 	}
 
-	//TODO CREATE A METHOD TO GO BACK TO MAIN ACTIVITY
+	//TODO CREATE A METHOD TO GO BACK TO MAIN ACTIVITY ON UP BUTTON
 
 }

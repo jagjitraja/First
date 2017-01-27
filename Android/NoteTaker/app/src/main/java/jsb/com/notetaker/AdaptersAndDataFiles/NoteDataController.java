@@ -20,6 +20,7 @@ public class NoteDataController extends Application {
 	public static Note.Category initialCategory = Note.Category.PRIVATE;
 	public static String initialDate = "";
 	public static int chosenNoteID = 0;
+
 	private static ArrayList readNotes;
 	private static FileOutputStream fileOutputStream;
 	private static Context context;

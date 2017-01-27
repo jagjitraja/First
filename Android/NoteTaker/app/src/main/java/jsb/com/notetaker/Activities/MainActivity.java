@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 				intent.putExtra(NOTE_CATEGORY_KEY, Note.Category.PRIVATE);
 				intent.putExtra(NOTE_BODY_KEY, " ");
 				intent.putExtra(NOTE_TITLE_KEY, " ");
+				intent.putExtra(NOTE_DATE_KEY," ");
 				intent.putExtra(NOTE_ID_KEY, -1);
 				startActivity(intent);
 				return true;

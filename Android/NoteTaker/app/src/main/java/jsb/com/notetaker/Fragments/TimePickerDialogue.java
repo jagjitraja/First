@@ -16,6 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import jsb.com.notetaker.AdaptersAndDataFiles.Note;
 import jsb.com.notetaker.R;
 
 public class TimePickerDialogue extends DialogFragment {
@@ -29,12 +30,13 @@ public class TimePickerDialogue extends DialogFragment {
 	private int day;
 	private int minute;
 	private int hour;
+    private SimpleDateFormat simpleDateFormat;
 
 	public TimePickerDialogue() {
 		// Required empty public constructor
 
 	}
-    //TODO - Laucnh date picker on date in edit fragment
+    //TODO - Launch date picker on date in edit fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
@@ -50,7 +52,17 @@ public class TimePickerDialogue extends DialogFragment {
 		Calendar nextCalender  = new GregorianCalendar(currentCalender.get(Calendar.YEAR),currentCalender.DECEMBER,31);
 		datePicker.setMaxDate(nextCalender.getTimeInMillis());
 
-		button.setOnClickListener(new View.OnClickListener() {
+        datePicker.updateDate(year,month,day);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            timePicker.setMinute(minute);
+            timePicker.setHour(hour);
+        }else{
+            timePicker.setCurrentMinute(minute);
+            timePicker.setCurrentHour(hour);
+        }
+
+        button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				button.setText("Done");
@@ -78,12 +90,12 @@ public class TimePickerDialogue extends DialogFragment {
 		return fragmentLayout;
 	}
 
-	private void setTime(int hour, int minute){
+	public void setTime(int hour, int minute){
 		this.hour = hour;
 		this.minute = minute;
 	}
 
-	private void setDate(int year, int month,int day) {
+	public void setDate(int year, int month,int day) {
         this.day = day;
         this.year = year;
         this.month = month;
@@ -97,8 +109,8 @@ public class TimePickerDialogue extends DialogFragment {
 
         if(editFragment!=null){
             Calendar calendar = new GregorianCalendar(year,month,day,hour,minute);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM, hh:mm a");
-            editFragment.setTimeFromTimePicker(dateFormat.format(calendar.getTime()));
+            simpleDateFormat = Note.getSimpleDateFormat();
+            editFragment.setTimeFromTimePicker(simpleDateFormat.format(calendar.getTime()));
         }
     }
 }
