@@ -50,13 +50,16 @@ public class NoteViewFragment extends Fragment {
 
 		switch (itemPosition){
 			case R.id.edit:
+                NoteDetailActivity.getActionBarNoteDetailActivity().setTitle(R.string.Add_Note_Title);
 				FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-				fragmentTransaction.replace(R.id.detail_container,new NoteEditFragment(),"NOTE_EDIT_FRAGMENT");
+				fragmentTransaction.replace(R.id.detail_container,new NoteEditFragment(),getString(R.string.NOTE_EDIT_FRAGMENT));
 				fragmentTransaction.commit();
 				break;
 
 			case R.id.delete:
 				//TODO: Create a delete confirmation dialogue
+
+
 				Intent intent = new Intent(getActivity(), MainActivity.class);
 				intent.putExtra(MainActivity.NOTE_TITLE_KEY, noteTitle);
 				intent.putExtra(MainActivity.NOTE_BODY_KEY, noteBody);

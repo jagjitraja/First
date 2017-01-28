@@ -2,6 +2,7 @@ package jsb.com.notetaker.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -32,7 +33,12 @@ public class NoteDetailActivity extends AppCompatActivity {
 	private Note.Category newNoteCategory;
 	private String newNoteDate;
 
-	@Override
+    @Nullable
+    public static ActionBar getActionBarNoteDetailActivity() {
+        return actionBar;
+    }
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -144,7 +150,6 @@ public class NoteDetailActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
             }
         }else{
-
             return super.onOptionsItemSelected(item);
         }
         return true;

@@ -18,7 +18,7 @@ import jsb.com.notetaker.R;
 
 public class Note implements Serializable {
 
-    public final String NOTE_CLASS = Note.class.getSimpleName();
+    public static final String NOTE_CLASS = Note.class.getSimpleName();
 
 	private int ID;
 	private String title;
@@ -165,7 +165,7 @@ public class Note implements Serializable {
 		try {
 			date = simpleDateFormat.parse(stringDate);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			Log.e(NOTE_CLASS,"Invalid date entered to be parsed => "+stringDate);
 		}
 		return date;
 	}

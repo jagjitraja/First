@@ -11,10 +11,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import jsb.com.notetaker.AdaptersAndDataFiles.Note;
@@ -44,7 +42,8 @@ public class TimePickerDialogue extends DialogFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		View fragmentLayout = inflater.inflate(R.layout.fragment_time_picker_dialogue, container, false);
+		View fragmentLayout = inflater.inflate(R.layout.fragment_time_picker_dialogue_portrait, container, false);
+
 		datePicker = (DatePicker) fragmentLayout.findViewById(R.id.datePicker);
 		timePicker = (TimePicker)fragmentLayout.findViewById(R.id.timePicker);
 		button = (Button)fragmentLayout.findViewById(R.id.changeButton);

@@ -18,7 +18,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="?attr/actionBarSize"
 			android:background="?attr/colorPrimary"
-			android:title="Note Taker"
+			android:title="@string/note_taker"
 			app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
 	</android.support.design.widget.AppBarLayout>
@@ -26,5 +26,22 @@
 	<include
 		layout="@layout/content_main"
 		android:visibility="visible"/>
+
+
+	<android.support.design.widget.FloatingActionButton
+		android:layout_width="60dp"
+		android:layout_height="60dp"
+		android:layout_gravity="right|bottom"
+		android:layout_margin="16dp"
+		app:borderWidth="0dp"
+		android:clickable="true"
+		app:elevation="15dp"
+		android:id="@+id/floatingActionButton"
+		app:backgroundTint="?attr/colorPrimary"
+		android:src="@android:drawable/ic_input_add"
+		tools:ignore="RtlHardcoded"
+		app:rippleColor="?android:attr/colorActivatedHighlight"
+		android:overScrollMode="ifContentScrolls"
+		android:nestedScrollingEnabled="true" />
 
 </android.support.design.widget.CoordinatorLayout>

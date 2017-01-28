@@ -10,7 +10,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +20,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import jsb.com.notetaker.Activities.MainActivity;
 import jsb.com.notetaker.Activities.NoteDetailActivity;
 import jsb.com.notetaker.AdaptersAndDataFiles.Note;
-import jsb.com.notetaker.AdaptersAndDataFiles.NoteAdapter;
 import jsb.com.notetaker.AdaptersAndDataFiles.NoteDataController;
 import jsb.com.notetaker.R;
 
@@ -35,7 +32,6 @@ import jsb.com.notetaker.R;
  * A simple {@link Fragment} subclass.
  */
 public class NoteEditFragment extends Fragment {
-
 
     public final String NOTE_EDIT_FRAGMENT = NoteEditFragment.class.getSimpleName();
 

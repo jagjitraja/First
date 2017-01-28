@@ -2,10 +2,14 @@ package jsb.com.notetaker.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
 import jsb.com.notetaker.AdaptersAndDataFiles.Note;
 import jsb.com.notetaker.R;
 
@@ -38,6 +42,24 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+
+        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(), NoteDetailActivity.class);
+                intent.putExtra(INTENT_MOTIVE, "3");
+                intent.putExtra(NOTE_CATEGORY_KEY, Note.Category.PRIVATE);
+                intent.putExtra(NOTE_BODY_KEY, "");
+                intent.putExtra(NOTE_TITLE_KEY, "");
+                intent.putExtra(NOTE_DATE_KEY,"");
+                intent.putExtra(NOTE_ID_KEY, -1);
+                startActivity(intent);
+            }
+        });
+
 	}
 
 	@Override
@@ -59,14 +81,6 @@ public class MainActivity extends AppCompatActivity {
 			case R.id.action_settings:
 				return true;
 			case R.id.add_note_button:
-				Intent intent = new Intent(this, NoteDetailActivity.class);
-				intent.putExtra(INTENT_MOTIVE, "3");
-				intent.putExtra(NOTE_CATEGORY_KEY, Note.Category.PRIVATE);
-				intent.putExtra(NOTE_BODY_KEY, " ");
-				intent.putExtra(NOTE_TITLE_KEY, " ");
-				intent.putExtra(NOTE_DATE_KEY," ");
-				intent.putExtra(NOTE_ID_KEY, -1);
-				startActivity(intent);
 				return true;
 		}
 

@@ -24,6 +24,7 @@
 	<string name="View_Note_Title">View Note</string>
 	<string name="Edit_Note_Title">Edit Note</string>
 	<string name="Add_Note_Title">Add New Note</string>
+	<string name="note_taker">Note Taker</string>
 
 
 </resources>

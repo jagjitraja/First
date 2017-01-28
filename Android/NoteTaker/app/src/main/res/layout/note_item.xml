@@ -18,7 +18,7 @@
 	<RelativeLayout
 		android:orientation="vertical"
 		android:id="@+id/dateSection"
-		android:layout_width="75dp"
+		android:layout_width="@dimen/date_width"
 		android:layout_height="match_parent"
 		android:layout_alignParentTop="true"
 		android:layout_alignParentEnd="true">
